@@ -17,18 +17,18 @@ class CurrentPortfolioRow extends React.Component {
 
   render(){
     return (
-        <div>
-          <div>
-            {this.convertToDisplayName(this.props.category)} $:
+        <div className="grid-x current-portfolio--row">
+          <div className="columns small-3">
+            <label for={this.props.category + "CurrentAmount"}>{this.convertToDisplayName(this.props.category)} $:</label>
           </div>
-          <div>
-            <input type="text" onChange={(e) => this.handleChange(this.props.category, e)} value={this.props.currentValue} name={this.props.category + "CurrentAmount"} />
+          <div className="columns small-3">
+            <input type="text" className="text-right" onChange={(e) => this.handleChange(this.props.category, e)} value={this.props.currentValue} id={this.props.category + "CurrentAmount"} />
           </div>
-          <div>
-            <input type="text" value={this.props.difference} name={this.props.category + "Difference"} readOnly />
+          <div className="columns small-3">
+            <input type="text" className="text-right" value={this.props.difference} disabled />
           </div>
-          <div>
-            <input type="text" value={this.props.recommendedValue} name={this.props.category + "NewAmount"} readOnly />
+          <div className="columns small-3">
+            <input type="text" className="text-right" value={this.props.recommendedValue} disabled />
           </div>
         </div>
     )

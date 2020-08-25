@@ -90,7 +90,7 @@ class CurrentPortfolio extends React.Component {
   }
 
   generateRecommendedTransfers() {
-    return <div id="recommendedTransfers">
+    return <div className="columns small-12 medium-3">
       <div>• Transfer $X from X to X.</div>
       <div>• Transfer $X from X to X.</div>
     </div>;
@@ -98,17 +98,24 @@ class CurrentPortfolio extends React.Component {
 
   render() {
     return (
-      <div>
-        <h2>Please Enter Your Current Portfolio</h2>
-        <button onClick={this.handleRebalance}>Rebalance</button>
-        
-        <CurrentPortfolioRow onChange={this.handleChange} category="bonds" difference={this.state.currentPortfolio.bonds.difference} recommendedValue={this.state.currentPortfolio.bonds.recommended} currentValue={this.state.currentPortfolio.bonds.amount}/>
-        <CurrentPortfolioRow onChange={this.handleChange} category="largeCap" difference={this.state.currentPortfolio.largeCap.difference} recommendedValue={this.state.currentPortfolio.largeCap.recommended} currentValue={this.state.currentPortfolio.largeCap.amount} />
-        <CurrentPortfolioRow onChange={this.handleChange} category="midCap" difference={this.state.currentPortfolio.midCap.difference} recommendedValue={this.state.currentPortfolio.midCap.recommended} currentValue={this.state.currentPortfolio.midCap.amount} />
-        <CurrentPortfolioRow onChange={this.handleChange} category="foreign" difference={this.state.currentPortfolio.foreign.difference} recommendedValue={this.state.currentPortfolio.foreign.recommended} currentValue={this.state.currentPortfolio.foreign.amount} />
-        <CurrentPortfolioRow onChange={this.handleChange} category="smallCap" difference={this.state.currentPortfolio.smallCap.difference} recommendedValue={this.state.currentPortfolio.smallCap.recommended} currentValue={this.state.currentPortfolio.smallCap.amount} />
-
-        {this.generateRecommendedTransfers()}
+      <div className="current-portfolio">
+        <div className="grid-x">
+          <h2 className="columns small-12 medium-10">Please Enter Your Current Portfolio</h2>
+          <div className="columns small-12 medium-2"> 
+            <button className="button primary" onClick={this.handleRebalance}>Rebalance</button>
+          </div>
+        </div>
+        <div className="grid-x">
+          <div className="columns small-12 medium-9">
+            <CurrentPortfolioRow onChange={this.handleChange} category="bonds" difference={this.state.currentPortfolio.bonds.difference} recommendedValue={this.state.currentPortfolio.bonds.recommended} currentValue={this.state.currentPortfolio.bonds.amount}/>
+            <CurrentPortfolioRow onChange={this.handleChange} category="largeCap" difference={this.state.currentPortfolio.largeCap.difference} recommendedValue={this.state.currentPortfolio.largeCap.recommended} currentValue={this.state.currentPortfolio.largeCap.amount} />
+            <CurrentPortfolioRow onChange={this.handleChange} category="midCap" difference={this.state.currentPortfolio.midCap.difference} recommendedValue={this.state.currentPortfolio.midCap.recommended} currentValue={this.state.currentPortfolio.midCap.amount} />
+            <CurrentPortfolioRow onChange={this.handleChange} category="foreign" difference={this.state.currentPortfolio.foreign.difference} recommendedValue={this.state.currentPortfolio.foreign.recommended} currentValue={this.state.currentPortfolio.foreign.amount} />
+            <CurrentPortfolioRow onChange={this.handleChange} category="smallCap" difference={this.state.currentPortfolio.smallCap.difference} recommendedValue={this.state.currentPortfolio.smallCap.recommended} currentValue={this.state.currentPortfolio.smallCap.amount} />
+          </div>
+          {this.generateRecommendedTransfers()}
+          
+        </div>
       </div>
     )
   }

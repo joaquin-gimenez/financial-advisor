@@ -6,7 +6,7 @@ function IdealPortfolioTableBody(props) {
     <tbody>
         {
           props.riskLevels.map((level, index) => 
-            <tr key={level + index}>
+            <tr key={level + index} className={ props.activeLevel === index + 1 ? "active" : ""}>
               <td>{index + 1}</td>
               <td>{level.bonds}</td>
               <td>{level.largeCap}</td>

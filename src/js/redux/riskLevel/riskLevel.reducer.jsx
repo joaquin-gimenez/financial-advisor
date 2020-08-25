@@ -3,7 +3,7 @@ import { riskLevelsData } from "../../data";
 
 const INITIAL_STATE = {
   riskLevels: riskLevelsData,
-  activeRiskLevel: 1
+  activeRiskLevel: null
 }
 
 const riskLevelReducer = (state = INITIAL_STATE, action) => {

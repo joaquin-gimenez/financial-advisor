@@ -13,7 +13,7 @@ class RiskFactorListItem extends React.Component {
 
   render() {
     return (
-      <li className={ this.props.activeLevel === this.props.riskLevel ? "active" : ""}
+      <li className={`cell auto button secondary text-center ${ this.props.activeLevel === this.props.riskLevel ? "active" : ""}`}
         onClick={() => this.updateActiveLevel(this.props.riskLevel)}>
         { this.props.riskLevel}
       </li>

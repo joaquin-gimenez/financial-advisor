@@ -1,0 +1,141 @@
+@import '../node_modules/foundation-sites/assets/foundation.scss';
+
+$primary: #73d0ff;
+$primary-variant: #98dbfd;
+$secondary: #E6FF3F;
+$tertiary: ghostwhite;
+$white: #fff;
+$black: #000;
+$lightgray: #f3f3f3;
+$quaternary: #0084bf;
+$quaternary-variant: #0c8996;
+
+h1 {
+  color: $tertiary;
+}
+h2 {
+  font-size: 1rem;
+}
+h1,
+h2 {
+  font-weight: bold;
+}
+
+[type='text'],
+[type='number'] {
+  border-radius: 5px;
+  border: 1px solid $black;
+  &:disabled {
+    background-color: $lightgray;
+    cursor: default;
+  }
+}
+.grid-container {
+  max-width: rem-calc(800);
+}
+
+.button{
+  &.primary,
+  &.secondary {
+    border: 2px solid $black;
+    border-radius: 5px;
+    font-weight: bold;
+    margin: 0;
+    height: 56px;
+    font-size: 1rem;
+  }
+  &.primary {
+    background-color: $primary;
+    color: $black;
+    &:hover,
+    &:active,
+    &:focus {
+      background-color: $primary-variant;
+      color: $black;
+    }
+    &:disabled {
+      color: $black;
+    }
+  }
+  &.secondary {
+    background-color: #fff;
+    color: $black;
+    &:hover,
+    &:active,
+    &:focus {
+      background-color: $white;
+      color: $black;
+    }
+    &.active {
+      background-color: $secondary; 
+      color: $black;
+    }
+  }
+}
+
+.header {
+  background: quaternary;
+  background: linear-gradient(45deg, $quaternary, $quaternary-variant);
+  h1 {
+    
+  }
+}
+
+.risk-factor--list {
+  margin-bottom: 0;
+  // @include breakpoint(medium){
+  li.button {
+    font-size: 1.5rem;
+    margin: 0 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: normal;
+    @media #{$medium-up} {
+      width: 54px;
+    }  
+  }  
+}
+
+.risk-label-levels {
+  padding: 5px 0;
+}
+
+.risk-factor--button {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.ideal-overview {
+  margin: 10px 0;
+}
+
+.ideal-portfolio-table{
+  tr {
+    &.active {
+      background-color: $secondary;
+    }
+    th {
+      text-align: center;
+    }
+    td {
+      text-align: right;
+    }
+  }
+}
+
+.current-portfolio {
+  input { 
+    margin: 0;
+  }
+}
+
+.current-portfolio--row {
+  padding: 5px 0;
+   & > div {
+    display: flex;
+    align-items: center;
+    padding: 0 3px;
+   }
+}

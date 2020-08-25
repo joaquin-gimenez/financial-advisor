@@ -1,12 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-const RiskFactorBarButton = () => {
+const RiskFactorBarButton = (props) => {
   return (
-    <Link to="/calculator">
-      <button id="continue">Continue</button>
-    </Link>
+    <div className="risk-factor--button cell small-12 medium-2">
+      <Link to="/calculator">
+        <button className="button primary" id="continue" disabled={!props.activeLevel}>Continue</button>
+      </Link>
+    </div>
   );
 }
 
-export default RiskFactorBarButton;
+const mapStateToProps = state => ({
+  activeLevel: state.riskLevels.activeRiskLevel
+})
+
+export default connect(mapStateToProps)(RiskFactorBarButton);

@@ -1,27 +1,34 @@
 import React from 'react';
 import IdealPortfolioTable from './IdealPortfolioTable';
 import IdealPortfolioGraph from './IdealPortfolioGraph';
-// import IdealPortfolioButton from './IdealPortfolioButton';
+import IdealPortfolioButton from './IdealPortfolioButton';
 
 class IdealPortfolioOverview extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      mode: "table"
+      displayAsGraph: false
     }
+    this.handleTableModeChange = this.handleTableModeChange.bind(this);
+  }
+
+  handleTableModeChange() {
+    this.setState({ displayAsGraph: !this.state.displayAsGraph })
   }
 
   render() {
     return (
-      <div>
-        <div>
-          {this.state.mode === "table"
-            ? <IdealPortfolioTable />
-            : <IdealPortfolioGraph />
+      <div className="ideal-overview grid-x">
+        <div className="columns small-12 medium-10">
+          {this.state.displayAsGraph
+            ? <IdealPortfolioGraph />
+            : <IdealPortfolioTable />
           }
         </div>
-        {/* <IdealPortfolioButton /> */}
+        <div className="columns small-12 medium-2">
+          <IdealPortfolioButton onClick={this.handleTableModeChange}/>
+        </div>
       </div>
     );
   }

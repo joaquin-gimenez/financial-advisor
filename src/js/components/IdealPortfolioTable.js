@@ -5,9 +5,9 @@ import IdealPortfolioTableBody from './IdealPortfolioTableBody';
 
 function IdealPortfolioTable(props) {
   return (
-    <table>
+    <table className="ideal-portfolio-table">
       <IdealPortfolioTableHeader />
-      <IdealPortfolioTableBody riskLevels={props.riskLevelsData} />
+      <IdealPortfolioTableBody activeLevel={props.activeRiskLevel} riskLevels={props.riskLevelsData} />
     </table>
   );
 }
