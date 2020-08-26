@@ -114,7 +114,7 @@ class CurrentPortfolio extends React.Component {
             <CurrentPortfolioRow onChange={this.handleChange} category="smallCap" difference={this.state.currentPortfolio.smallCap.difference} recommendedValue={this.state.currentPortfolio.smallCap.recommended} currentValue={this.state.currentPortfolio.smallCap.amount} />
           </div>
           {this.generateRecommendedTransfers()}
-          
+        
         </div>
       </div>
     )

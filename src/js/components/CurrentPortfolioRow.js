@@ -1,4 +1,5 @@
 import React from 'react';
+import { convertToDisplayName } from './Helpers/Helpers.js'
 
 class CurrentPortfolioRow extends React.Component {
 
@@ -10,16 +11,11 @@ class CurrentPortfolioRow extends React.Component {
     this.props.onChange(category, e.target.value);
   }
 
-  convertToDisplayName(name) {
-    var displayName = name.split(/(?=[A-Z])/).join(" ");
-    return displayName.charAt(0).toUpperCase() + displayName.slice(1);
-  }
-
-  render(){
+  render() {
     return (
         <div className="grid-x current-portfolio--row">
           <div className="columns small-3">
-            <label for={this.props.category + "CurrentAmount"}>{this.convertToDisplayName(this.props.category)} $:</label>
+            <label htmlFor={this.props.category + "CurrentAmount"}>{convertToDisplayName(this.props.category)} $:</label>
           </div>
           <div className="columns small-3">
             <input type="text" className="text-right" onChange={(e) => this.handleChange(this.props.category, e)} value={this.props.currentValue} id={this.props.category + "CurrentAmount"} />

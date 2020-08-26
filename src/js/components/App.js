@@ -14,7 +14,7 @@ const App = () => (
           </li>
         </ul>
       </nav>
-      <h1 class="text-center">Financial Advisor</h1>
+      <h1 className="text-center">Financial Advisor</h1>
     </div>
     <div className="grid-container">
       <Switch>
@@ -29,6 +29,7 @@ const App = () => (
           render={() => <Home />}
         />
       </Switch>
+      
     </div>
   </Router>
 )

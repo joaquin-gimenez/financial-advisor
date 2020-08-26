@@ -9,7 +9,7 @@
           <th key="largeCap">Large Cap %</th>
           <th key="midCap">Mid Cap %</th>
           <th key="foreign">Foreign %</th>
-          <th key="smallCap">smallCap %</th>
+          <th key="smallCap">small Cap %</th>
         </tr>
       </thead>
     );
