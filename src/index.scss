@@ -129,6 +129,15 @@ h2 {
   input { 
     margin: 0;
   }
+  .current-portfolio--recommended-steps {
+    ul {
+      margin-top: 10px;
+      list-style-type: disc;
+      li {
+        font-size: 0.8rem;
+      }
+    }
+  }
 }
 
 .current-portfolio--row {

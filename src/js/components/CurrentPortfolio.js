@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import CurrentPortfolioRow from './CurrentPortfolioRow';
+import { toTwoDecimal } from './Helpers/Helpers';
 
 class CurrentPortfolio extends React.Component {
 
@@ -85,15 +86,75 @@ class CurrentPortfolio extends React.Component {
   }
 
   calculateDifference(amount, recommendedAmount) {
-    let difference = parseFloat((recommendedAmount - amount).toFixed(2));  
-    return Math.sign(difference) >= 0 ? "+" + difference: difference;
+    let difference = toTwoDecimal(recommendedAmount - amount);  
+    // return Math.sign(difference) >= 0 ? "+" + difference: difference;
+    return difference;
   }
 
   generateRecommendedTransfers() {
-    return <div className="columns small-12 medium-3">
-      <div>• Transfer $X from X to X.</div>
-      <div>• Transfer $X from X to X.</div>
-    </div>;
+    let overRecommendedAmount = new Map();
+    let underRecommendedAmount = new Map();
+    let onRecommendedAmount = new Map();
+    let steps = []; 
+
+    Object.entries(this.state.currentPortfolio).map((category) => {
+      if (category[1].difference > 0) {
+        underRecommendedAmount.set(category[0], category[1].difference);
+      } else if (category[1].difference < 0) {
+        overRecommendedAmount.set(category[0], category[1].difference);
+      } else {
+        onRecommendedAmount.set(category[0], category[1].difference);
+      }
+    });
+
+    while(overRecommendedAmount.size) {
+      for (let [keyOver] of overRecommendedAmount) {
+        for (let [keyUnder] of underRecommendedAmount) {
+          if (!overRecommendedAmount.has(keyOver) || !underRecommendedAmount.has(keyUnder)) {
+            continue;
+          }
+          let amountToTransfer;
+          if (Math.abs(overRecommendedAmount.get(keyOver)) >= underRecommendedAmount.get(keyUnder)) {
+            amountToTransfer = toTwoDecimal(underRecommendedAmount.get(keyUnder));
+            overRecommendedAmount.set(keyOver, toTwoDecimal( overRecommendedAmount.get(keyOver) + amountToTransfer ));
+            underRecommendedAmount.set(keyUnder, 0);
+          } else {
+            amountToTransfer = toTwoDecimal( Math.abs(overRecommendedAmount.get(keyOver)) );
+            underRecommendedAmount.set(keyUnder, toTwoDecimal( underRecommendedAmount.get(keyUnder) - amountToTransfer ));
+            overRecommendedAmount.set(keyOver, 0);
+          }
+          steps.push({
+            amount: Math.abs(amountToTransfer),
+            from: keyOver,
+            to: keyUnder  
+          });
+
+          if(underRecommendedAmount.get(keyUnder) === 0) {
+            underRecommendedAmount.delete(keyUnder);
+            onRecommendedAmount.set(keyUnder, 0);
+          }
+          if(overRecommendedAmount.get(keyOver) === 0) {
+            overRecommendedAmount.delete(keyOver);
+            onRecommendedAmount.set(keyOver, 0);
+          }
+        }
+      }
+    }
+    return this.printRecommendedTransfers(steps);
+  }
+
+  printRecommendedTransfers(steps) {
+    return (
+      <div className="current-portfolio--recommended-steps columns small-12 medium-3">
+        <ul>
+          {
+            steps.map((step, index) => {
+              return <li key={index}>Transfer ${step.amoun} from ${step.from} to ${step.to}.</li>;
+            })
+          }
+        </ul>
+      </div>
+    );
   }
 
   render() {
@@ -114,7 +175,6 @@ class CurrentPortfolio extends React.Component {
             <CurrentPortfolioRow onChange={this.handleChange} category="smallCap" difference={this.state.currentPortfolio.smallCap.difference} recommendedValue={this.state.currentPortfolio.smallCap.recommended} currentValue={this.state.currentPortfolio.smallCap.amount} />
           </div>
           {this.generateRecommendedTransfers()}
-        
         </div>
       </div>
     )
