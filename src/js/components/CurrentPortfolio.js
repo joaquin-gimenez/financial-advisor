@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import CurrentPortfolioRow from './CurrentPortfolioRow';
-import { toTwoDecimal } from './Helpers/Helpers';
+import { convertToDisplayName, toTwoDecimal } from './Helpers/Helpers';
 
 class CurrentPortfolio extends React.Component {
 
@@ -145,15 +145,15 @@ class CurrentPortfolio extends React.Component {
 
   printRecommendedTransfers(steps) {
     return (
-      <div className="current-portfolio--recommended-steps columns small-12 medium-3">
-        <ul>
+      <td className="current-portfolio--recommended" rowSpan="5">
+        <div>
           {
             steps.map((step, index) => {
-              return <li key={index}>Transfer ${step.amoun} from ${step.from} to ${step.to}.</li>;
+              return <div className="current-portfolio--recommended-item" key={index}>•Transfer {step.amount} from {convertToDisplayName(step.from)} to {convertToDisplayName(step.to)}.</div>;
             })
           }
-        </ul>
-      </div>
+        </div>
+      </td>
     );
   }
 
@@ -167,14 +167,35 @@ class CurrentPortfolio extends React.Component {
           </div>
         </div>
         <div className="grid-x">
-          <div className="columns small-12 medium-9">
-            <CurrentPortfolioRow onChange={this.handleChange} category="bonds" difference={this.state.currentPortfolio.bonds.difference} recommendedValue={this.state.currentPortfolio.bonds.recommended} currentValue={this.state.currentPortfolio.bonds.amount}/>
-            <CurrentPortfolioRow onChange={this.handleChange} category="largeCap" difference={this.state.currentPortfolio.largeCap.difference} recommendedValue={this.state.currentPortfolio.largeCap.recommended} currentValue={this.state.currentPortfolio.largeCap.amount} />
-            <CurrentPortfolioRow onChange={this.handleChange} category="midCap" difference={this.state.currentPortfolio.midCap.difference} recommendedValue={this.state.currentPortfolio.midCap.recommended} currentValue={this.state.currentPortfolio.midCap.amount} />
-            <CurrentPortfolioRow onChange={this.handleChange} category="foreign" difference={this.state.currentPortfolio.foreign.difference} recommendedValue={this.state.currentPortfolio.foreign.recommended} currentValue={this.state.currentPortfolio.foreign.amount} />
-            <CurrentPortfolioRow onChange={this.handleChange} category="smallCap" difference={this.state.currentPortfolio.smallCap.difference} recommendedValue={this.state.currentPortfolio.smallCap.recommended} currentValue={this.state.currentPortfolio.smallCap.amount} />
-          </div>
-          {this.generateRecommendedTransfers()}
+          <table className="current-portfolio--table columns small-12 unstriped">
+            <thead>
+              <tr>
+                <th className="text-center" colSpan="2" >Current Amount</th>
+                <th className="text-center">Difference</th>
+                <th className="text-center">New Amount</th>
+                <th className="text-center">Recommended Transfers</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <CurrentPortfolioRow onChange={this.handleChange} category="bonds" difference={this.state.currentPortfolio.bonds.difference} recommendedValue={this.state.currentPortfolio.bonds.recommended} currentValue={this.state.currentPortfolio.bonds.amount}/>
+                {this.generateRecommendedTransfers()}
+              </tr>
+              <tr>
+                <CurrentPortfolioRow onChange={this.handleChange} category="largeCap" difference={this.state.currentPortfolio.largeCap.difference} recommendedValue={this.state.currentPortfolio.largeCap.recommended} currentValue={this.state.currentPortfolio.largeCap.amount} />
+              </tr>
+              <tr>
+                <CurrentPortfolioRow onChange={this.handleChange} category="midCap" difference={this.state.currentPortfolio.midCap.difference} recommendedValue={this.state.currentPortfolio.midCap.recommended} currentValue={this.state.currentPortfolio.midCap.amount} />
+              </tr>
+              <tr>
+                <CurrentPortfolioRow onChange={this.handleChange} category="foreign" difference={this.state.currentPortfolio.foreign.difference} recommendedValue={this.state.currentPortfolio.foreign.recommended} currentValue={this.state.currentPortfolio.foreign.amount} />
+              </tr>
+              <tr>
+                <CurrentPortfolioRow onChange={this.handleChange} category="smallCap" difference={this.state.currentPortfolio.smallCap.difference} recommendedValue={this.state.currentPortfolio.smallCap.recommended} currentValue={this.state.currentPortfolio.smallCap.amount} />
+              </tr>
+            </tbody>
+          </table>
+          
         </div>
       </div>
     )

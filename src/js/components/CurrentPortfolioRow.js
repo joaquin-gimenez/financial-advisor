@@ -11,22 +11,26 @@ class CurrentPortfolioRow extends React.Component {
     this.props.onChange(category, e.target.value);
   }
 
+  formatAmountDifference(difference) {
+    return typeof difference === 'number' && Math.sign(difference) >= 0 ? "+" + difference: difference;
+  }
+
   render() {
     return (
-        <div className="grid-x current-portfolio--row">
-          <div className="columns small-3">
+        <>
+          <td>
             <label htmlFor={this.props.category + "CurrentAmount"}>{convertToDisplayName(this.props.category)} $:</label>
-          </div>
-          <div className="columns small-3">
+          </td>
+          <td>
             <input type="text" className="text-right" onChange={(e) => this.handleChange(this.props.category, e)} value={this.props.currentValue} id={this.props.category + "CurrentAmount"} />
-          </div>
-          <div className="columns small-3">
-            <input type="text" className="text-right" value={this.props.difference} disabled />
-          </div>
-          <div className="columns small-3">
+          </td>
+          <td>
+            <input type="text" className={"text-right " + (Math.sign(this.props.difference) >= 0 ? "positive-difference" : "negative-difference") } value={this.formatAmountDifference(this.props.difference)} disabled />
+          </td>
+          <td>
             <input type="text" className="text-right" value={this.props.recommendedValue} disabled />
-          </div>
-        </div>
+          </td>
+        </>
     )
   }
 }

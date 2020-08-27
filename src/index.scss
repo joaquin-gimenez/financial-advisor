@@ -9,6 +9,10 @@ $black: #000;
 $lightgray: #f3f3f3;
 $quaternary: #0084bf;
 $quaternary-variant: #0c8996;
+$color-error: red;
+$color-success: green;
+
+$padding-portfolio-table: 8px;
 
 h1 {
   color: $tertiary;
@@ -31,7 +35,7 @@ h2 {
   }
 }
 .grid-container {
-  max-width: rem-calc(800);
+  max-width: rem-calc(1000);
 }
 
 .button{
@@ -71,6 +75,14 @@ h2 {
       color: $black;
     }
   }
+}
+
+.positive-difference {
+  color: $color-success;
+}
+
+.negative-difference {
+  color: $color-error; 
 }
 
 .header {
@@ -126,14 +138,33 @@ h2 {
 }
 
 .current-portfolio {
+
+  h2 {
+    
+  }
   input { 
     margin: 0;
   }
-  .current-portfolio--recommended-steps {
-    ul {
-      margin-top: 10px;
-      list-style-type: disc;
-      li {
+  
+  .current-portfolio--table {
+    table-layout: fixed;
+    td {
+      padding: $padding-portfolio-table;
+    }
+  }
+
+  .current-portfolio--recommended {
+    position: relative;
+    & > div {
+      position: absolute;
+      top: $padding-portfolio-table;
+      bottom: $padding-portfolio-table;
+      width: calc(100% - #{$padding-portfolio-table * 2});
+      border: 1px solid black;
+      border-radius: 5px;
+      .current-portfolio--recommended-item {
+        margin-top: 10px;
+        margin-left: 5px;
         font-size: 0.8rem;
       }
     }
