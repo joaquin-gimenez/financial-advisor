@@ -2,7 +2,12 @@ import React from 'react';
 
 function IdealPortfolioButton(props) {
   return (
-    <button id="changePortfolioGraph" onClick={props.onClick}>Change</button>
+    <button className="ideal-overview--button text-center" onClick={props.onClick}>
+      {props.graphMode
+        ? <img src="/src/assets/chartlogo.jpg" />
+        : <img src="/src/assets/donutlogo.png" />
+      }
+    </button>
   );
 }
 

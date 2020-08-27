@@ -18,17 +18,17 @@ class CurrentPortfolioRow extends React.Component {
   render() {
     return (
         <>
-          <td>
+          <td className="small-col">
             <label htmlFor={this.props.category + "CurrentAmount"}>{convertToDisplayName(this.props.category)} $:</label>
           </td>
-          <td>
+          <td className="mid-col">
             <input type="text" className="text-right" onChange={(e) => this.handleChange(this.props.category, e)} value={this.props.currentValue} id={this.props.category + "CurrentAmount"} />
           </td>
-          <td>
-            <input type="text" className={"text-right " + (Math.sign(this.props.difference) >= 0 ? "positive-difference" : "negative-difference") } value={this.formatAmountDifference(this.props.difference)} disabled />
+          <td className="mid-col">
+            <input type="text" className={"text-right " + (Math.sign(this.props.difference) >= 0 ? "color-success" : "color-error") } value={this.formatAmountDifference(this.props.difference)} disabled />
           </td>
-          <td>
-            <input type="text" className="text-right" value={this.props.recommendedValue} disabled />
+          <td className="mid-col">
+            <input type="text" className="color-info text-right" value={this.props.recommendedValue} disabled />
           </td>
         </>
     )

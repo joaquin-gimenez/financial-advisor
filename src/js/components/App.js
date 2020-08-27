@@ -7,13 +7,10 @@ import '../../index.scss';
 const App = () => (
   <Router>
     <div className="row header">
-      <nav>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-        </ul>
-      </nav>
+      <Link to="/">
+        <img src="/src/assets/home.ico" />
+      </Link>
+          
       <h1 className="text-center">Financial Advisor</h1>
     </div>
     <div className="grid-container">

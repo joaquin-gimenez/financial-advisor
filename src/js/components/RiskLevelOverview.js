@@ -6,7 +6,8 @@ function RiskLevelOverview(props) {
 
     return (
       <div>
-        <h2>Risk Level {props.activeRiskLevel}</h2>
+        <h2 className="text-center">Personalized Portfolio</h2>
+        <h3>Risk Level {props.activeRiskLevel}</h3>
         <table>
           <thead>
             <tr>
@@ -20,11 +21,11 @@ function RiskLevelOverview(props) {
           <tbody>
               {
                 <tr>
-                  <td>{props.riskLevelData.bonds}</td>
-                  <td>{props.riskLevelData.largeCap}</td>
-                  <td>{props.riskLevelData.midCap}</td>
-                  <td>{props.riskLevelData.foreign}</td>
-                  <td>{props.riskLevelData.smallCap}</td>
+                  <td className="text-right">{props.riskLevelData.bonds}%</td>
+                  <td className="text-right">{props.riskLevelData.largeCap}%</td>
+                  <td className="text-right">{props.riskLevelData.midCap}%</td>
+                  <td className="text-right">{props.riskLevelData.foreign}%</td>
+                  <td className="text-right">{props.riskLevelData.smallCap}%</td>
                 </tr>
               }
           </tbody>

@@ -145,11 +145,11 @@ class CurrentPortfolio extends React.Component {
 
   printRecommendedTransfers(steps) {
     return (
-      <td className="current-portfolio--recommended" rowSpan="5">
+      <td className="large-col current-portfolio--recommended" rowSpan="5">
         <div>
           {
             steps.map((step, index) => {
-              return <div className="current-portfolio--recommended-item" key={index}>•Transfer {step.amount} from {convertToDisplayName(step.from)} to {convertToDisplayName(step.to)}.</div>;
+              return <div className="current-portfolio--recommended-item" key={index}>• Transfer ${step.amount} from {convertToDisplayName(step.from)} to {convertToDisplayName(step.to)}.</div>;
             })
           }
         </div>
@@ -160,8 +160,8 @@ class CurrentPortfolio extends React.Component {
   render() {
     return (
       <div className="current-portfolio">
-        <div className="grid-x">
-          <h2 className="columns small-12 medium-10">Please Enter Your Current Portfolio</h2>
+        <div className="current-portfolio--header grid-x">
+          <h3 className="columns small-12 medium-10">Please Enter Your Current Portfolio</h3>
           <div className="columns small-12 medium-2"> 
             <button className="button primary" onClick={this.handleRebalance}>Rebalance</button>
           </div>

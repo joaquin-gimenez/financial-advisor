@@ -11,17 +11,35 @@ $quaternary: #0084bf;
 $quaternary-variant: #0c8996;
 $color-error: red;
 $color-success: green;
+$color-info: blue;
 
 $padding-portfolio-table: 8px;
+
+.color-success {
+  color: $color-success;
+}
+.color-error {
+  color: $color-error;
+}
+.color-info {
+  color: $color-info;
+}
 
 h1 {
   color: $tertiary;
 }
 h2 {
-  font-size: 1rem;
+  font-size: 1.5rem;
+  margin-top: 25px;
+}
+h3 {
+  font-size: 1.2rem;
+  margin-top: 25px;
+  margin-bottom: 15px;
 }
 h1,
-h2 {
+h2,
+h3 {
   font-weight: bold;
 }
 
@@ -35,7 +53,7 @@ h2 {
   }
 }
 .grid-container {
-  max-width: rem-calc(1000);
+  max-width: rem-calc(900);
 }
 
 .button{
@@ -57,7 +75,8 @@ h2 {
       background-color: $primary-variant;
       color: $black;
     }
-    &:disabled {
+    &:disabled,
+    &:disabled:hover {
       color: $black;
     }
   }
@@ -77,19 +96,21 @@ h2 {
   }
 }
 
-.positive-difference {
-  color: $color-success;
-}
-
-.negative-difference {
-  color: $color-error; 
-}
-
 .header {
-  background: quaternary;
+  height: 100px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $quaternary;
   background: linear-gradient(45deg, $quaternary, $quaternary-variant);
-  h1 {
-    
+  a {
+    position: absolute;
+    width: 50px;
+    margin-left: 25px;
+    margin-top: 25px;
+    left: 0;
+    top: 0;
   }
 }
 
@@ -121,6 +142,14 @@ h2 {
 
 .ideal-overview {
   margin: 10px 0;
+  .ideal-overview--button {
+    img {
+      border: 3px solid $black;
+      border-radius: 8px;
+      width: 60px;
+      height: 52px;
+    }
+  }
 }
 
 .ideal-portfolio-table{
@@ -139,17 +168,33 @@ h2 {
 
 .current-portfolio {
 
-  h2 {
-    
-  }
   input { 
     margin: 0;
   }
+
+  .current-portfolio--header {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    h3 {
+      margin: 0;
+    }
+  }
   
   .current-portfolio--table {
-    table-layout: fixed;
+
     td {
       padding: $padding-portfolio-table;
+    }
+    .small-col {
+      width: 13%;
+    }
+    .mid-col {
+      width: 18%;
+    }
+    .large-col {
+      width: 33%;
     }
   }
 
@@ -165,7 +210,7 @@ h2 {
       .current-portfolio--recommended-item {
         margin-top: 10px;
         margin-left: 5px;
-        font-size: 0.8rem;
+        font-size: 0.9rem;
       }
     }
   }
