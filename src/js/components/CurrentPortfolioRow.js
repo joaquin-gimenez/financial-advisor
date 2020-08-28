@@ -22,13 +22,23 @@ class CurrentPortfolioRow extends React.Component {
             <label htmlFor={this.props.category + "CurrentAmount"}>{convertToDisplayName(this.props.category)} $:</label>
           </td>
           <td className="mid-col">
-            <input type="text" className="text-right" onChange={(e) => this.handleChange(this.props.category, e)} value={this.props.currentValue} id={this.props.category + "CurrentAmount"} />
+            <input type="text" 
+              className="text-right" 
+              onChange={(e) => this.handleChange(this.props.category, e)} 
+              value={this.props.currentValue} 
+              autoComplete="off" />
           </td>
           <td className="mid-col">
-            <input type="text" className={"text-right " + (Math.sign(this.props.difference) >= 0 ? "color-success" : "color-error") } value={this.formatAmountDifference(this.props.difference)} disabled />
+            <input type="text" 
+              className={"text-right " + (Math.sign(this.props.difference) >= 0 ? "color-success" : "color-error") } 
+              value={this.formatAmountDifference(this.props.difference)} 
+              disabled />
           </td>
           <td className="mid-col">
-            <input type="text" className="color-info text-right" value={this.props.recommendedValue} disabled />
+            <input type="text" 
+              className="color-info text-right" 
+              value={this.props.recommendedValue} 
+              disabled />
           </td>
         </>
     )
