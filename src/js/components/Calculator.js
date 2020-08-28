@@ -1,12 +1,22 @@
 import React from 'react';
-import RiskLevelOverview from './RiskLevelOverview';
+import { connect } from 'react-redux';
+import RiskLevelOverview from './RiskFactor/RiskLevelOverview';
+import CurrentPortfolio from './CurrentPortfolio/CurrentPortfolio';
 
-const Calculator = (props) => {
- return (
-    <div>
-      <RiskLevelOverview />
-    </div>
-  )
+function calculator(props) {
+
+    return (
+      <div>
+        <h2 className="text-center">Personalized Portfolio</h2>
+        <h3>Risk Level {props.activeRiskLevel}</h3>
+        <RiskLevelOverview />
+        <CurrentPortfolio />
+      </div>
+    );
 }
 
-export default Calculator;
+const mapStateToProps = state => ({
+  activeRiskLevel: state.riskLevels.activeRiskLevel
+});
+
+export default connect(mapStateToProps)(calculator);

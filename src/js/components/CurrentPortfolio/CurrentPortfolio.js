@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import CurrentPortfolioRow from './CurrentPortfolioRow';
-import RecommendedTransfers from './RecommendedTransfers';
-import { toTwoDecimal } from './Helpers/Helpers';
+import CurrentPortfolioRecommendedTransfers from './CurrentPortfolioRecommendedTransfers';
+import { toTwoDecimal } from '../Helpers/Helpers';
 
 class CurrentPortfolio extends React.Component {
 
@@ -68,13 +68,7 @@ class CurrentPortfolio extends React.Component {
 
   handleRebalance () {
     let currentPortfolio = {...this.state.currentPortfolio};
-    let allNumbersInArray = Object.values(currentPortfolio).every(category => {
-      return !isNaN(category.amount);
-    })
-    if (!allNumbersInArray) {
-      this.setState({
-        incorrectAmountFormat: true
-      });
+    if (!this.shouldRebalance(currentPortfolio)) {
       return;
     }
     const totalCurrentValues = this.calculateTotalCurrentValues();
@@ -88,6 +82,18 @@ class CurrentPortfolio extends React.Component {
       ...currentPortfolio,
       incorrectAmountFormat: false
     })
+  }
+
+  shouldRebalance(currentPortfolio) {
+    let allNumbers = Object.values(currentPortfolio).every(category => {
+      return !isNaN(category.amount);
+    })
+    if (!allNumbers) {
+      this.setState({
+        incorrectAmountFormat: true
+      });
+    }
+    return allNumbers;
   }
 
   calculateTotalCurrentValues() {
@@ -108,17 +114,23 @@ class CurrentPortfolio extends React.Component {
   }
 
   calculateDifference(amount, recommendedAmount) {
-    let difference = toTwoDecimal(recommendedAmount - amount);  
-    return difference;
+    return toTwoDecimal(recommendedAmount - amount);  
   }
 
   render() {
     return (
       <div className="current-portfolio">
         <div className="current-portfolio--header grid-x">
-          <h3 className="columns small-12 medium-10 text-center medium-text-left">Please Enter Your Current Portfolio</h3>
+          <h3 className="columns small-12 medium-10 text-center medium-text-left">
+            Please Enter Your Current Portfolio
+          </h3>
           <div className="columns small-12 medium-2 text-center medium-text-left"> 
-            <button className="button primary" onClick={this.handleRebalance} disabled={!this.state.enableRebalance}>Rebalance</button>
+            <button 
+              className="button primary" 
+              onClick={this.handleRebalance} 
+              disabled={!this.state.enableRebalance}>
+                Rebalance
+            </button>
           </div>
         </div>
         <div className="grid-x">
@@ -133,24 +145,50 @@ class CurrentPortfolio extends React.Component {
             </thead>
             <tbody>
               <tr>
-                <CurrentPortfolioRow onChange={this.handleChange} category="bonds" difference={this.state.currentPortfolio.bonds.difference} recommendedValue={this.state.currentPortfolio.bonds.recommended} currentValue={this.state.currentPortfolio.bonds.amount}/>
-                <RecommendedTransfers incorrectAmountFormat={this.state.incorrectAmountFormat} currentPortfolio={this.state.currentPortfolio}/>
+                <CurrentPortfolioRow 
+                  onChange={this.handleChange} 
+                  category="bonds" 
+                  difference={this.state.currentPortfolio.bonds.difference} 
+                  recommendedValue={this.state.currentPortfolio.bonds.recommended} 
+                  currentValue={this.state.currentPortfolio.bonds.amount}/>
+                <CurrentPortfolioRecommendedTransfers 
+                  incorrectAmountFormat={this.state.incorrectAmountFormat} 
+                  currentPortfolio={this.state.currentPortfolio}/>
               </tr>
               <tr>
-                <CurrentPortfolioRow onChange={this.handleChange} category="largeCap" difference={this.state.currentPortfolio.largeCap.difference} recommendedValue={this.state.currentPortfolio.largeCap.recommended} currentValue={this.state.currentPortfolio.largeCap.amount} />
+                <CurrentPortfolioRow 
+                  onChange={this.handleChange} 
+                  category="largeCap" 
+                  difference={this.state.currentPortfolio.largeCap.difference} 
+                  recommendedValue={this.state.currentPortfolio.largeCap.recommended} 
+                  currentValue={this.state.currentPortfolio.largeCap.amount} />
               </tr>
               <tr>
-                <CurrentPortfolioRow onChange={this.handleChange} category="midCap" difference={this.state.currentPortfolio.midCap.difference} recommendedValue={this.state.currentPortfolio.midCap.recommended} currentValue={this.state.currentPortfolio.midCap.amount} />
+                <CurrentPortfolioRow 
+                  onChange={this.handleChange} 
+                  category="midCap" 
+                  difference={this.state.currentPortfolio.midCap.difference} 
+                  recommendedValue={this.state.currentPortfolio.midCap.recommended} 
+                  currentValue={this.state.currentPortfolio.midCap.amount} />
               </tr>
               <tr>
-                <CurrentPortfolioRow onChange={this.handleChange} category="foreign" difference={this.state.currentPortfolio.foreign.difference} recommendedValue={this.state.currentPortfolio.foreign.recommended} currentValue={this.state.currentPortfolio.foreign.amount} />
+                <CurrentPortfolioRow 
+                  onChange={this.handleChange} 
+                  category="foreign" 
+                  difference={this.state.currentPortfolio.foreign.difference} 
+                  recommendedValue={this.state.currentPortfolio.foreign.recommended} 
+                  currentValue={this.state.currentPortfolio.foreign.amount} />
               </tr>
               <tr>
-                <CurrentPortfolioRow onChange={this.handleChange} category="smallCap" difference={this.state.currentPortfolio.smallCap.difference} recommendedValue={this.state.currentPortfolio.smallCap.recommended} currentValue={this.state.currentPortfolio.smallCap.amount} />
+                <CurrentPortfolioRow 
+                  onChange={this.handleChange} 
+                  category="smallCap" 
+                  difference={this.state.currentPortfolio.smallCap.difference} 
+                  recommendedValue={this.state.currentPortfolio.smallCap.recommended} 
+                  currentValue={this.state.currentPortfolio.smallCap.amount} />
               </tr>
             </tbody>
           </table>
-          
         </div>
       </div>
     )
@@ -158,8 +196,7 @@ class CurrentPortfolio extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  riskLevelData: state.riskLevels.riskLevels[state.riskLevels.activeRiskLevel - 1],
-  activeRiskLevel: state.riskLevels.activeRiskLevel
+  riskLevelData: state.riskLevels.riskLevels[state.riskLevels.activeRiskLevel - 1]
 });
 
 export default connect(mapStateToProps)(CurrentPortfolio);

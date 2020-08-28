@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as d3 from "d3";
-import SliceGraph from './SliceGraph';
-import SliceTextGraph from './SliceTextGraph';
+import IdealPortfolioGraphSlice from './IdealPortfolioGraphSlice';
+import IdealPortfolioGraphSliceText  from './IdealPortfolioGraphSliceText';
 
 function IdealPortfolioGraph(props) {
   const height = 500;
@@ -18,8 +18,16 @@ function IdealPortfolioGraph(props) {
   return (
     <svg height={height} width={width}>
       <g transform={`translate(${width / 2},${height / 2})`}>
-        <SliceGraph pie={data_ready} innerRadius={innerRadius} margin={margin} radius={width / 2} />
-        <SliceTextGraph pie={data_ready} innerRadius={innerRadius} margin={margin} radius={width / 2} />
+        <IdealPortfolioGraphSlice 
+          pie={data_ready} 
+          innerRadius={innerRadius} 
+          margin={margin} 
+          radius={width / 2} />
+        <IdealPortfolioGraphSliceText 
+          pie={data_ready} 
+          innerRadius={innerRadius} 
+          margin={margin} 
+          radius={width / 2} />
       </g>
     </svg>
   );

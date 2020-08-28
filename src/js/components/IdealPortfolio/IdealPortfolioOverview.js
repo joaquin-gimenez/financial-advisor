@@ -14,7 +14,9 @@ class IdealPortfolioOverview extends React.Component {
   }
 
   handleTableModeChange() {
-    this.setState({ displayAsGraph: !this.state.displayAsGraph })
+    this.setState({ 
+      displayAsGraph: !this.state.displayAsGraph 
+    })
   }
 
   render() {
@@ -27,7 +29,9 @@ class IdealPortfolioOverview extends React.Component {
           }
         </div>
         <div className="columns small-12 medium-2">
-          <IdealPortfolioButton graphMode={this.state.displayAsGraph} onClick={this.handleTableModeChange}/>
+          <IdealPortfolioButton 
+            graphMode={this.state.displayAsGraph} 
+            onClick={this.handleTableModeChange}/>
         </div>
       </div>
     );

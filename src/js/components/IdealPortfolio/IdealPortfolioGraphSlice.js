@@ -1,7 +1,7 @@
 import React from 'react';
 import * as d3 from "d3";
 
-const SliceGraph = props => {
+const IdealPortfolioGraphSlice = props => {
   let { pie, radius, innerRadius, margin } = props;
   let arc = d3.arc()
     .innerRadius(innerRadius)
@@ -30,4 +30,4 @@ const SliceGraph = props => {
   );
 }
 
-export default SliceGraph;
+export default IdealPortfolioGraphSlice;

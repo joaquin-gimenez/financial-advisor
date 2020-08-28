@@ -1,6 +1,6 @@
 import React from 'react';
-import RiskFactorHeader from './RiskFactorHeader';
-import IdealPortfolioOverview from './IdealPortfolioOverview';
+import RiskFactorHeader from './RiskFactor/RiskFactorHeader';
+import IdealPortfolioOverview from './IdealPortfolio/IdealPortfolioOverview';
 
 const Home = () => {
   return (

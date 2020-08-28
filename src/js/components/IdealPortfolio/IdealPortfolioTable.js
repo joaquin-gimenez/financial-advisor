@@ -7,7 +7,9 @@ function IdealPortfolioTable(props) {
   return (
     <table className="ideal-portfolio-table">
       <IdealPortfolioTableHeader />
-      <IdealPortfolioTableBody activeLevel={props.activeRiskLevel} riskLevels={props.riskLevelsData} />
+      <IdealPortfolioTableBody 
+        activeLevel={props.activeRiskLevel} 
+        riskLevels={props.riskLevelsData} />
     </table>
   );
 }

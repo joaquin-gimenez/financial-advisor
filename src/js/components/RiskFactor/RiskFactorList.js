@@ -8,7 +8,10 @@ const RiskFactorList = (riskLevels) => {
       <ul className="risk-factor--list grid-x no-bullet align-middle">
         {
           riskLevels.riskLevelsData.map((level, index) => {
-            return <RiskFactorListItem riskLevel={index + 1} activeLevel={riskLevels.activeRiskLevel} key={index + 1} />
+            return <RiskFactorListItem 
+                      riskLevel={index + 1} 
+                      activeLevel={riskLevels.activeRiskLevel} 
+                      key={index + 1} />
           })
         }
       </ul>

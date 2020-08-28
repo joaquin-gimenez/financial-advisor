@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { setActiveRiskLevel } from '../redux/riskLevel/riskLevel.actions';
+import { setActiveRiskLevel } from '../../redux/riskLevel/riskLevel.actions';
 
 class RiskFactorListItem extends React.Component {
   constructor(props) {

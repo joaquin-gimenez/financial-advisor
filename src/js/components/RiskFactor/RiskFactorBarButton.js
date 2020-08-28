@@ -6,7 +6,11 @@ const RiskFactorBarButton = (props) => {
   return (
     <div className="risk-factor--button cell small-12 medium-2">
       <Link to="/calculator">
-        <button className="button primary" id="continue" disabled={!props.activeLevel}>Continue</button>
+        <button 
+          className="button primary"
+          disabled={!props.activeLevel}>
+          Continue
+        </button>
       </Link>
     </div>
   );

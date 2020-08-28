@@ -1,8 +1,8 @@
 import React from 'react';
 import * as d3 from "d3";
-import { convertToDisplayName } from './Helpers/Helpers.js'
+import { convertToDisplayName } from '../Helpers/Helpers.js'
 
-const SliceTextGraph = props => {
+const IdealPortfolioGraphSliceText = props => {
   let { pie, radius, innerRadius, margin } = props;
   let arc = d3.arc()
   .innerRadius(innerRadius)
@@ -18,4 +18,4 @@ const SliceTextGraph = props => {
     })
 }
 
-export default SliceTextGraph;
+export default IdealPortfolioGraphSliceText;

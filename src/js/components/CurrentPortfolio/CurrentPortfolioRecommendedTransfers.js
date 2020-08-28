@@ -1,19 +1,15 @@
 import React from 'react';
-import { convertToDisplayName, toTwoDecimal } from './Helpers/Helpers';
+import { convertToDisplayName, toTwoDecimal } from '../Helpers/Helpers';
 
-class RecommendedTransfers extends React.Component {
+function RecommendedTransfers(props) {
 
-  constructor(props) {
-    super(props);
-  }
+  function generateRecommendedTransfers() {
+    let overRecommendedAmount = new Map(),
+    underRecommendedAmount = new Map(),
+    onRecommendedAmount = new Map(),
+    steps = []; 
 
-  generateRecommendedTransfers() {
-    let overRecommendedAmount = new Map();
-    let underRecommendedAmount = new Map();
-    let onRecommendedAmount = new Map();
-    let steps = []; 
-
-    Object.entries(this.props.currentPortfolio).map((category) => {
+    Object.entries(props.currentPortfolio).map((category) => {
       if (category[1].difference > 0) {
         underRecommendedAmount.set(category[0], category[1].difference);
       } else if (category[1].difference < 0) {
@@ -56,17 +52,19 @@ class RecommendedTransfers extends React.Component {
         }
       }
     }
-    return this.printRecommendedTransfers(steps);
+    return printRecommendedTransfers(steps);
   }
 
-  printRecommendedTransfers(steps) {
+  function printRecommendedTransfers(steps) {
     return (
       <td className="large-col current-portfolio--recommended" rowSpan="5">
         <div>
-        {this.props.incorrectAmountFormat
+        {props.incorrectAmountFormat
           ? <p className="color-error">Please use only positive digits or zero when entering current amounts. Please enter all inputs correctly.</p>
           : steps.map((step, index) => {
-              return <div className="current-portfolio--recommended-item" key={index}>• Transfer ${step.amount} from {convertToDisplayName(step.from)} to {convertToDisplayName(step.to)}.</div>;
+              return <div className="current-portfolio--recommended-item" key={index}>
+                  • Transfer ${step.amount} from {convertToDisplayName(step.from)} to {convertToDisplayName(step.to)}.
+                </div>;
             })
         }
         </div>
@@ -74,11 +72,9 @@ class RecommendedTransfers extends React.Component {
     );
   }
 
-  render() {
-    return (
-      this.generateRecommendedTransfers()
-    )
-  }
+  return (
+    generateRecommendedTransfers()
+  )
 }
 
 export default RecommendedTransfers;
