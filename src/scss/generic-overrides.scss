@@ -1,0 +1,70 @@
+h1 {
+  color: $tertiary;
+}
+h2 {
+  font-size: 1.5rem;
+  margin-top: 25px;
+}
+h3 {
+  font-size: 1.2rem;
+  margin-top: 25px;
+  margin-bottom: 15px;
+}
+h1,
+h2,
+h3 {
+  font-weight: bold;
+}
+
+[type='text'],
+[type='number'] {
+  border-radius: 5px;
+  border: 1px solid $black;
+  &:disabled {
+    background-color: $lightgray;
+    cursor: default;
+  }
+}
+.grid-container {
+  max-width: rem-calc(900);
+}
+
+.button{
+  &.primary,
+  &.secondary {
+    border: 2px solid $black;
+    border-radius: 5px;
+    font-weight: bold;
+    margin: 0;
+    height: 56px;
+    font-size: 1rem;
+  }
+  &.primary {
+    background-color: $primary;
+    color: $black;
+    &:hover,
+    &:active,
+    &:focus {
+      background-color: $primary-variant;
+      color: $black;
+    }
+    &:disabled,
+    &:disabled:hover {
+      color: $black;
+    }
+  }
+  &.secondary {
+    background-color: #fff;
+    color: $black;
+    &:hover,
+    &:active,
+    &:focus {
+      background-color: $white;
+      color: $black;
+    }
+    &.active {
+      background-color: $secondary; 
+      color: $black;
+    }
+  }
+}
