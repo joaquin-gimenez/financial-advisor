@@ -1,37 +1,40 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import CurrentPortfolioRow from './CurrentPortfolioRow';
-import { convertToDisplayName, toTwoDecimal } from './Helpers/Helpers';
+import RecommendedTransfers from './RecommendedTransfers';
+import { toTwoDecimal } from './Helpers/Helpers';
 
 class CurrentPortfolio extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
+      enableRebalance: false, 
       totalCurrentValues: 0,
+      incorrectAmountFormat: false,
       currentPortfolio: {
         bonds: {
-          amount: 2,
+          amount: "",
           recommended: "",
           difference: ""
         },
         largeCap: {
-          amount: 3,
+          amount: "",
           recommended: "",
           difference: ""
         },
         midCap: {
-          amount: 1,
+          amount: "",
           recommended: "",
           difference: ""
         },
         foreign: {
-          amount: 5,
+          amount: "",
           recommended: "",
           difference: ""
         },
         smallCap: {
-          amount: 10,
+          amount: "",
           recommended: "",
           difference: ""
         }
@@ -40,19 +43,40 @@ class CurrentPortfolio extends React.Component {
 
     this.handleChange =  this.handleChange.bind(this);
     this.handleRebalance =  this.handleRebalance.bind(this);
+    this.checkStatusButton = this.checkStatusButton.bind(this);
   }
 
   handleChange (category, value) {
     let currentPortfolio = {...this.state.currentPortfolio};
-    currentPortfolio[category].amount = value;
+    currentPortfolio[category].amount = isNaN(value) || value === "" ? value : parseInt(value);
     
     this.setState({
       ...currentPortfolio
+    });
+
+    this.checkStatusButton();
+  }
+
+  checkStatusButton() {
+    let enableRebalance = Object.values(this.state.currentPortfolio).every((category) => {
+      return category.amount;
+    });
+    this.setState({
+      enableRebalance 
     });
   }
 
   handleRebalance () {
     let currentPortfolio = {...this.state.currentPortfolio};
+    let allNumbersInArray = Object.values(currentPortfolio).every(category => {
+      return !isNaN(category.amount);
+    })
+    if (!allNumbersInArray) {
+      this.setState({
+        incorrectAmountFormat: true
+      });
+      return;
+    }
     const totalCurrentValues = this.calculateTotalCurrentValues();
 
     for (const [category, data] of Object.entries(currentPortfolio)) {
@@ -61,10 +85,8 @@ class CurrentPortfolio extends React.Component {
     }
 
     this.setState({
-      CurrentPortfolio: {
-        ...this.state.currentPortfolio,
-        currentPortfolio
-      }
+      ...currentPortfolio,
+      incorrectAmountFormat: false
     })
   }
 
@@ -87,83 +109,16 @@ class CurrentPortfolio extends React.Component {
 
   calculateDifference(amount, recommendedAmount) {
     let difference = toTwoDecimal(recommendedAmount - amount);  
-    // return Math.sign(difference) >= 0 ? "+" + difference: difference;
     return difference;
-  }
-
-  generateRecommendedTransfers() {
-    let overRecommendedAmount = new Map();
-    let underRecommendedAmount = new Map();
-    let onRecommendedAmount = new Map();
-    let steps = []; 
-
-    Object.entries(this.state.currentPortfolio).map((category) => {
-      if (category[1].difference > 0) {
-        underRecommendedAmount.set(category[0], category[1].difference);
-      } else if (category[1].difference < 0) {
-        overRecommendedAmount.set(category[0], category[1].difference);
-      } else {
-        onRecommendedAmount.set(category[0], category[1].difference);
-      }
-    });
-
-    while(overRecommendedAmount.size) {
-      for (let [keyOver] of overRecommendedAmount) {
-        for (let [keyUnder] of underRecommendedAmount) {
-          if (!overRecommendedAmount.has(keyOver) || !underRecommendedAmount.has(keyUnder)) {
-            continue;
-          }
-          let amountToTransfer;
-          if (Math.abs(overRecommendedAmount.get(keyOver)) >= underRecommendedAmount.get(keyUnder)) {
-            amountToTransfer = toTwoDecimal(underRecommendedAmount.get(keyUnder));
-            overRecommendedAmount.set(keyOver, toTwoDecimal( overRecommendedAmount.get(keyOver) + amountToTransfer ));
-            underRecommendedAmount.set(keyUnder, 0);
-          } else {
-            amountToTransfer = toTwoDecimal( Math.abs(overRecommendedAmount.get(keyOver)) );
-            underRecommendedAmount.set(keyUnder, toTwoDecimal( underRecommendedAmount.get(keyUnder) - amountToTransfer ));
-            overRecommendedAmount.set(keyOver, 0);
-          }
-          steps.push({
-            amount: Math.abs(amountToTransfer),
-            from: keyOver,
-            to: keyUnder  
-          });
-
-          if(underRecommendedAmount.get(keyUnder) === 0) {
-            underRecommendedAmount.delete(keyUnder);
-            onRecommendedAmount.set(keyUnder, 0);
-          }
-          if(overRecommendedAmount.get(keyOver) === 0) {
-            overRecommendedAmount.delete(keyOver);
-            onRecommendedAmount.set(keyOver, 0);
-          }
-        }
-      }
-    }
-    return this.printRecommendedTransfers(steps);
-  }
-
-  printRecommendedTransfers(steps) {
-    return (
-      <td className="large-col current-portfolio--recommended" rowSpan="5">
-        <div>
-          {
-            steps.map((step, index) => {
-              return <div className="current-portfolio--recommended-item" key={index}>• Transfer ${step.amount} from {convertToDisplayName(step.from)} to {convertToDisplayName(step.to)}.</div>;
-            })
-          }
-        </div>
-      </td>
-    );
   }
 
   render() {
     return (
       <div className="current-portfolio">
         <div className="current-portfolio--header grid-x">
-          <h3 className="columns small-12 medium-10">Please Enter Your Current Portfolio</h3>
-          <div className="columns small-12 medium-2"> 
-            <button className="button primary" onClick={this.handleRebalance}>Rebalance</button>
+          <h3 className="columns small-12 medium-10 text-center medium-text-left">Please Enter Your Current Portfolio</h3>
+          <div className="columns small-12 medium-2 text-center medium-text-left"> 
+            <button className="button primary" onClick={this.handleRebalance} disabled={!this.state.enableRebalance}>Rebalance</button>
           </div>
         </div>
         <div className="grid-x">
@@ -179,7 +134,7 @@ class CurrentPortfolio extends React.Component {
             <tbody>
               <tr>
                 <CurrentPortfolioRow onChange={this.handleChange} category="bonds" difference={this.state.currentPortfolio.bonds.difference} recommendedValue={this.state.currentPortfolio.bonds.recommended} currentValue={this.state.currentPortfolio.bonds.amount}/>
-                {this.generateRecommendedTransfers()}
+                <RecommendedTransfers incorrectAmountFormat={this.state.incorrectAmountFormat} currentPortfolio={this.state.currentPortfolio}/>
               </tr>
               <tr>
                 <CurrentPortfolioRow onChange={this.handleChange} category="largeCap" difference={this.state.currentPortfolio.largeCap.difference} recommendedValue={this.state.currentPortfolio.largeCap.recommended} currentValue={this.state.currentPortfolio.largeCap.amount} />
