@@ -121,10 +121,10 @@ class CurrentPortfolio extends React.Component {
     return (
       <div className="current-portfolio">
         <div className="current-portfolio--header grid-x">
-          <h3 className="columns small-12 medium-10 text-center medium-text-left">
+          <h3 className="cell small-12 medium-10 text-center medium-text-left">
             Please Enter Your Current Portfolio
           </h3>
-          <div className="columns small-12 medium-2 text-center medium-text-left"> 
+          <div className="cell small-12 medium-2 text-center medium-text-left"> 
             <button 
               className="button primary" 
               onClick={this.handleRebalance} 
@@ -134,7 +134,7 @@ class CurrentPortfolio extends React.Component {
           </div>
         </div>
         <div className="grid-x">
-          <table className="current-portfolio--table columns small-12 unstriped">
+          <table className="current-portfolio--table cell small-12 unstriped">
             <thead>
               <tr>
                 <th className="text-center" colSpan="2" >Current Amount</th>

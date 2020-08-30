@@ -1,36 +1,39 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import * as d3 from "d3";
-import IdealPortfolioGraphSlice from './IdealPortfolioGraphSlice';
-import IdealPortfolioGraphSliceText  from './IdealPortfolioGraphSliceText';
+import PieGraphHook from './PieGraphHook';
 
 function IdealPortfolioGraph(props) {
   const height = 500;
   const width = 500;
   const margin = 50;
   const innerRadius = 100;
-
-  const data = props.activeRiskLevel;
-  let pie = d3.pie()
-    .value(function(d) { return d.value });
-  let data_ready = pie(d3.entries(data));
+  const outerRadius = (width / 2) - margin;
+  const colors = [
+    '#1f77b4',
+    '#aec7e8',
+    '#ff7f0e',
+    '#ffbb78',
+    '#2ca02c'
+  ];
+  const defaultValues = [20, 20, 20, 20, 20];
+  const defaultText = "Select Level";
+  let shouldDisplayDefault = !props.activeRiskLevel;
 
   return (
-    <svg height={height} width={width}>
-      <g transform={`translate(${width / 2},${height / 2})`}>
-        <IdealPortfolioGraphSlice 
-          pie={data_ready} 
-          innerRadius={innerRadius} 
-          margin={margin} 
-          radius={width / 2} />
-        <IdealPortfolioGraphSliceText 
-          pie={data_ready} 
-          innerRadius={innerRadius} 
-          margin={margin} 
-          radius={width / 2} />
-      </g>
-    </svg>
-  );
+    <PieGraphHook
+      data={shouldDisplayDefault 
+        ? defaultValues 
+        : props.activeRiskLevel
+      }
+      width={width}
+      height={height}
+      innerRadius={innerRadius}
+      outerRadius={outerRadius}
+      colors={colors}
+      shouldDisplayDefault={shouldDisplayDefault}
+      defaultText={defaultText}
+    />
+  )
 }
 
 const mapStateToProps = state => ({

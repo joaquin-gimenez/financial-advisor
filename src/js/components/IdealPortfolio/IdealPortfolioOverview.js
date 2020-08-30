@@ -22,13 +22,13 @@ class IdealPortfolioOverview extends React.Component {
   render() {
     return (
       <div className="ideal-overview grid-x">
-        <div className="columns small-12 medium-10">
+        <div className="cell small-12 medium-10 text-center">
           {this.state.displayAsGraph
             ? <IdealPortfolioGraph />
             : <IdealPortfolioTable />
           }
         </div>
-        <div className="columns small-12 medium-2">
+        <div className="cell small-12 medium-2 text-center">
           <IdealPortfolioButton 
             graphMode={this.state.displayAsGraph} 
             onClick={this.handleTableModeChange}/>
