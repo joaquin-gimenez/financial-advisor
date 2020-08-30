@@ -20,7 +20,7 @@
   .risk-factor--list {
     margin-bottom: 0;
     li.button {
-      font-size: 1.5rem;
+      font-size: 1.1rem;
       margin: 0 2px;
       display: flex;
       align-items: center;
@@ -28,6 +28,7 @@
       font-weight: normal;
       @media #{$medium-up} {
         width: 54px;
+        font-size: 1.5rem;
       }  
     }  
   }
