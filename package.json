@@ -1,7 +1,7 @@
 {
   "name": "financial-advisor",
   "version": "1.0.0",
-  "description": "",
+  "description": "Financial Advisor is an app on helping users understand the different investment risk levels and aid them on rebalancing their current portfolio.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -10,7 +10,7 @@
     "lint": "eslint src -c .eslintrc.json --ext js,jsx"
   },
   "keywords": [],
-  "author": "",
+  "author": "Joaquin Gimenez",
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.11.1",
