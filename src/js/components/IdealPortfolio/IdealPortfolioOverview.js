@@ -8,7 +8,7 @@ class IdealPortfolioOverview extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      displayAsGraph: true
+      displayAsGraph: false
     }
     this.handleTableModeChange = this.handleTableModeChange.bind(this);
   }
