@@ -20,6 +20,7 @@ function CurrentPortfolioRow(props) {
         </td>
         <td className="mid-col">
           <input type="text" 
+            id={props.category + "CurrentAmount"}
             className="highlight-animation text-right" 
             onChange={(e) => handleChange(props.category, e)} 
             value={props.currentValue} 

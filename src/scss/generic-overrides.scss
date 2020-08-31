@@ -2,13 +2,19 @@ body {
   font-family: "Roboto", sans-serif;
 }
 h1 {
-  font-size: 3.5em;
+  font-size: 2.2em;
   font-weight: 500;
   color: $tertiary;
+  @media #{$medium-up} {
+    font-size: 3.5rem;
+  }  
 }
 h2 {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   margin-top: 25px;
+  @media #{$medium-up} {
+    font-size: 1.5rem;
+  }
 }
 h3 {
   font-size: 1.2rem;

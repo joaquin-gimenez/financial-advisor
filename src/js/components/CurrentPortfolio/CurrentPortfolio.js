@@ -126,7 +126,7 @@ class CurrentPortfolio extends React.Component {
           </h3>
           <div className="cell small-12 medium-2 text-center medium-text-left"> 
             <button 
-              className="button primary" 
+              className="current-portfolio--button button primary" 
               onClick={this.handleRebalance} 
               disabled={!this.state.enableRebalance}>
                 Rebalance
