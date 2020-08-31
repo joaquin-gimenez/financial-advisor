@@ -20,7 +20,7 @@ function CurrentPortfolioRow(props) {
         </td>
         <td className="mid-col">
           <input type="text" 
-            className="text-right" 
+            className="highlight-animation text-right" 
             onChange={(e) => handleChange(props.category, e)} 
             value={props.currentValue} 
             autoComplete="off" />

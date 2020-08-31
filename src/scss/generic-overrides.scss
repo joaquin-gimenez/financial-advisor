@@ -68,3 +68,15 @@ h3 {
     }
   }
 }
+
+.highlight-animation {
+  animation: highlightAnimation 0.7s;
+  animation-iteration-count: 3;
+}
+
+@keyframes highlightAnimation {
+  50% { 
+    border-color: $primary;
+    box-shadow: 0 0 10px $primary;
+  }
+}
