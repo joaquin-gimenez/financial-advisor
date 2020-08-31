@@ -28,10 +28,12 @@ function PieGraphHook(props) {
     .outerRadius(outerRadius)
 
   useEffect(() => {
+    d3.select(".circle-wrapper").remove();
     let svg = d3.select(svgRef.current)
       .attr("width", width)
       .attr("height", height)
       .append("g")
+        .attr("class","circle-wrapper")
         .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
     
     let centeredText = svg
