@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 function RiskLevelOverview(props) {
 
     return (
-      <table>
+      <table className="risk-level-overview">
         <thead>
           <tr>
             <th key="bonds">Bonds</th>

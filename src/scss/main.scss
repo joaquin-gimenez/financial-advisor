@@ -129,6 +129,20 @@
   }
 }
 
+.risk-level-overview {
+  tbody {
+    tr {
+      &:hover {
+        cursor: pointer;
+        td {
+          background-color: $lightblue;
+        }
+      }
+
+    }
+  }
+}
+
 .arc {
   cursor: pointer;
 }
