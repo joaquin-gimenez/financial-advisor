@@ -1,6 +1,13 @@
 import React from 'react';
+import { categories } from '../../data';
 
 function IdealPortfolioTableBody(props) {
+
+  function generateLevelRows(level) {
+    return categories.map(category => {
+      return <td key={category.key}>{level[category.key]}</td>;
+    })
+  }
 
   return (
     <tbody>
@@ -10,11 +17,7 @@ function IdealPortfolioTableBody(props) {
               key={level + index} 
               className={ props.activeLevel === index + 1 ? "active" : ""}>
                 <td>{index + 1}</td>
-                <td>{level.bonds}</td>
-                <td>{level.largeCap}</td>
-                <td>{level.midCap}</td>
-                <td>{level.foreign}</td>
-                <td>{level.smallCap}</td>
+                {generateLevelRows(level)}
             </tr>
           )
         }

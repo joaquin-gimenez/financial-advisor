@@ -1,9 +1,9 @@
 export const categories = [
-  "Bonds",
-  "Large Cap",
-  "Mid Cap",
-  "Foreign",
-  "Small Cap"
+  {"key": "bonds", "label": "Bonds"},
+  {"key": "largeCap", "label": "Large Cap"},
+  {"key": "midCap", "label": "Mid Cap"},
+  {"key": "foreign", "label": "Foreign"},
+  {"key": "smallCap", "label": "Small Cap"}
 ];
 
 export const riskLevelsData = [

@@ -1,18 +1,21 @@
-  import React from 'react';
-  
-  function IdealPortfolioTableHeader(props) {
-    return (
-      <thead>
-        <tr>
-          <th key="risk">Risk</th>
-          <th key="bonds">Bonds %</th>
-          <th key="largeCap">Large Cap %</th>
-          <th key="midCap">Mid Cap %</th>
-          <th key="foreign">Foreign %</th>
-          <th key="smallCap">small Cap %</th>
-        </tr>
-      </thead>
-    );
-  }
-  
-  export default IdealPortfolioTableHeader;
+import React from 'react';
+import { categories } from '../../data';
+
+function generateCategoryList() {
+  return categories.map(category => {
+    return <th key={category.key}>{category.label} %</th>;
+  })
+}
+
+function IdealPortfolioTableHeader(props) {
+  return (
+    <thead>
+      <tr>
+        <th key="risk">Risk</th>
+        {generateCategoryList()}
+      </tr>
+    </thead>
+  );
+}
+
+export default IdealPortfolioTableHeader;

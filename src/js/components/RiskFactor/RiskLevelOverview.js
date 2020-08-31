@@ -1,32 +1,36 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { categories } from '../../data';
 
 function RiskLevelOverview(props) {
 
-    return (
-      <table className="risk-level-overview">
-        <thead>
-          <tr>
-            <th key="bonds">Bonds</th>
-            <th key="largeCap">Large Cap</th>
-            <th key="midCap">Mid Cap</th>
-            <th key="foreign">Foreign</th>
-            <th key="smallCap">smallCap</th>
-          </tr>
-        </thead>
-        <tbody>
-            {
-              <tr>
-                <td className="text-right">{props.riskLevelData.bonds}%</td>
-                <td className="text-right">{props.riskLevelData.largeCap}%</td>
-                <td className="text-right">{props.riskLevelData.midCap}%</td>
-                <td className="text-right">{props.riskLevelData.foreign}%</td>
-                <td className="text-right">{props.riskLevelData.smallCap}%</td>
-              </tr>
-            }
-        </tbody>
-      </table>
-    );
+  function generateCategoryHeader() {
+    return categories.map(category => {
+      return <th key={category.key}>{category.label}</th>;
+    })
+  }
+  function generateCategoryList() {
+    return categories.map(category => {
+      return <td className="text-right" key={category.key}>{props.riskLevelData[category.key] + "%"}</td>
+    })
+  }
+
+  return (
+    <table className="risk-level-overview">
+      <thead>
+        <tr>
+          {generateCategoryHeader()}
+        </tr>
+      </thead>
+      <tbody>
+          {
+            <tr>
+              {generateCategoryList()}
+            </tr>
+          }
+      </tbody>
+    </table>
+  );
 }
 
 const mapStateToProps = state => ({
