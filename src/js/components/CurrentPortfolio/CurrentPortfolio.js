@@ -64,6 +64,7 @@ const CurrentPortfolio = () => {
   function handleRebalance() {
     let currentPortfolioCopy = {...currentPortfolio};
     if (!shouldRebalance(currentPortfolioCopy)) {
+      resetCalculations();
       return;
     }
     const totalCurrentValues = calculateTotalCurrentValues();
@@ -84,6 +85,16 @@ const CurrentPortfolio = () => {
       setIncorrectAmountFormat( true );
     }
     return arePositiveNumbers;
+  }
+
+  function resetCalculations() {
+    let currentPortfolioCopy = {...currentPortfolio};
+    
+    for (const [category, data] of Object.entries(currentPortfolioCopy)) {
+      data.recommended = "";
+      data.difference = "";
+    }
+    setCurrentPortfolio({ ...currentPortfolioCopy });
   }
 
   function calculateTotalCurrentValues() {
