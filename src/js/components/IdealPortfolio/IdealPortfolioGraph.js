@@ -7,7 +7,6 @@ function IdealPortfolioGraph() {
     state.riskLevels.riskLevels[ 
       state.riskLevels.activeRiskLevel - 1
     ]);
-  
 
   const height = 500;
   const width = 500;
@@ -23,11 +22,10 @@ function IdealPortfolioGraph() {
   ];
   const defaultValues = [20, 20, 20, 20, 20];
   const defaultText = "Select Level";
-  let shouldDisplayDefault = !activeRiskLevel;
 
   return (
     <PieGraph
-      data={shouldDisplayDefault 
+      data={!activeRiskLevel 
         ? defaultValues 
         : activeRiskLevel
       }
@@ -36,7 +34,7 @@ function IdealPortfolioGraph() {
       innerRadius={innerRadius}
       outerRadius={outerRadius}
       colors={colors}
-      shouldDisplayDefault={shouldDisplayDefault}
+      shouldDisplayDefault={!activeRiskLevel}
       defaultText={defaultText}
     />
   )
