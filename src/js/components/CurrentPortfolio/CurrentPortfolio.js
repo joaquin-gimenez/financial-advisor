@@ -56,9 +56,9 @@ const CurrentPortfolio = () => {
 
   function checkStatusButton() {
     let enableRebalance = Object.values(currentPortfolio).every((category) => {
-      return category.amount;
+      return category.amount !== "";
     });
-    setEnableRebalance({ enableRebalance });
+    setEnableRebalance( enableRebalance );
   }
 
   function handleRebalance() {
@@ -73,17 +73,17 @@ const CurrentPortfolio = () => {
       data.difference = calculateDifference(data.amount, data.recommended);
     }
     setIncorrectAmountFormat( false );
-    setEnableRebalance({ ...currentPortfolioCopy });
+    setCurrentPortfolio({ ...currentPortfolioCopy });
   }
 
   function shouldRebalance(currentPortfolio) {
-    let allNumbers = Object.values(currentPortfolio).every(category => {
-      return !isNaN(category.amount);
+    let arePositiveNumbers = Object.values(currentPortfolio).every(category => {
+      return !isNaN(category.amount) && Math.sign(category.amount) >= 0;
     })
-    if (!allNumbers) {
+    if (!arePositiveNumbers) {
       setIncorrectAmountFormat( true );
     }
-    return allNumbers;
+    return arePositiveNumbers;
   }
 
   function calculateTotalCurrentValues() {
