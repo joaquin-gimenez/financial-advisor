@@ -1,6 +1,6 @@
 import React, { useRef, useEffect} from 'react';
 import * as d3 from "d3";
-import { convertToDisplayName } from '../Helpers/Helpers.js'
+import { unCamelCase, uppercaseFirstLetter } from '../Helpers/Helpers.js'
 
 const PieGraph = (props) => {
   const height = props.height;
@@ -78,7 +78,7 @@ const PieGraph = (props) => {
         if (!shouldDisplayDefault ) {
           d3.select(this).select('text')
             .text(function(d){
-                return convertToDisplayName(d.data.key);
+                return uppercaseFirstLetter(unCamelCase(d.data.key));
             })
         }
       })
@@ -91,7 +91,7 @@ const PieGraph = (props) => {
         .text(function(d,i) { 
           return shouldDisplayDefault 
             ? defaultText 
-            : convertToDisplayName(d.data.key); 
+            : uppercaseFirstLetter(unCamelCase(d.data.key)); 
         });
         
   }, [props.data, svgRef])

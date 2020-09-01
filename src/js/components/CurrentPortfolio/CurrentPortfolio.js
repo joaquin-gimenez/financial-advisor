@@ -45,7 +45,9 @@ const CurrentPortfolio = () => {
   function handleChange(category, value) {
 
     let currentPortfolioCopy = {...currentPortfolio};
-    currentPortfolioCopy[category].amount = isNaN(value) || value === "" ? value : parseInt(value);
+    currentPortfolioCopy[category].amount = isNaN(value) || value === ""  
+      ? value 
+      : parseInt(value);
     
     setCurrentPortfolio({ ...currentPortfolioCopy });
 

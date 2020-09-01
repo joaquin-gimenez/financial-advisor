@@ -1,5 +1,5 @@
 import React from 'react';
-import { convertToDisplayName, toTwoDecimal } from '../Helpers/Helpers';
+import { unCamelCase, uppercaseFirstLetter, toTwoDecimal } from '../Helpers/Helpers';
 
 const RecommendedTransfers = (props) => {
 
@@ -52,7 +52,7 @@ const RecommendedTransfers = (props) => {
         }
       }
     }
-    return printRecommendedTransfers(steps);
+    return steps;
   }
 
   function printRecommendedTransfers(steps) {
@@ -63,7 +63,7 @@ const RecommendedTransfers = (props) => {
           ? <p className="color-error">Please use only positive digits or zero when entering current amounts. Please enter all inputs correctly.</p>
           : steps.map((step, index) => {
               return <div className="current-portfolio--recommended-item" key={index}>
-                  • Transfer ${step.amount} from {convertToDisplayName(step.from)} to {convertToDisplayName(step.to)}.
+                  • Transfer ${step.amount} from { uppercaseFirstLetter(unCamelCase(step.from))} to {uppercaseFirstLetter(unCamelCase(step.to))}.
                 </div>;
             })
         }
@@ -73,7 +73,9 @@ const RecommendedTransfers = (props) => {
   }
 
   return (
-    generateRecommendedTransfers()
+    printRecommendedTransfers(
+      generateRecommendedTransfers()
+    )
   )
 }
 

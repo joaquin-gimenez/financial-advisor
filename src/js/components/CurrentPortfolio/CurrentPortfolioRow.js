@@ -1,5 +1,5 @@
 import React from 'react';
-import { convertToDisplayName } from '../Helpers/Helpers.js'
+import { unCamelCase, uppercaseFirstLetter } from '../Helpers/Helpers.js'
 
 const CurrentPortfolioRow = (props) => {
 
@@ -7,6 +7,7 @@ const CurrentPortfolioRow = (props) => {
     props.onChange(category, e.target.value);
   }
 
+  // Adds plus sign in front of positive numbers
   const formatAmountDifference = (difference) => {
     return typeof difference === 'number' && Math.sign(difference) >= 0 
       ? "+" + difference
@@ -17,7 +18,7 @@ const CurrentPortfolioRow = (props) => {
       <>
         <td className="small-col">
           <label htmlFor={props.category + "CurrentAmount"}>
-            {convertToDisplayName(props.category)} $:
+            {uppercaseFirstLetter(unCamelCase(props.category))} $:
           </label>
         </td>
         <td className="mid-col">
