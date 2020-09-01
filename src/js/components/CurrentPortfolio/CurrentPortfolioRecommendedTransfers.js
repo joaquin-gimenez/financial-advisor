@@ -60,7 +60,7 @@ const RecommendedTransfers = (props) => {
       <td className="large-col current-portfolio--recommended" rowSpan="5">
         <div>
         {props.incorrectAmountFormat
-          ? <p className="color-error">Please use only positive digits or zero when entering current amounts. Please enter all inputs correctly.</p>
+          ? <p className="current-portfolio--recommended-error color-error">Please use only positive digits or zero when entering current amounts. Please enter all inputs correctly.</p>
           : steps.map((step, index) => {
               return <div className="current-portfolio--recommended-item" key={index}>
                   • Transfer ${step.amount} from { uppercaseFirstLetter(unCamelCase(step.from))} to {uppercaseFirstLetter(unCamelCase(step.to))}.
