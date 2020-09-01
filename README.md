@@ -19,4 +19,4 @@ App uses [webpack DevServer](https://webpack.js.org/configuration/dev-server/), 
 
 ## Demo
 
-working demo [here](https://youtu.be/yt7pDsrLrGI)
+working demo [here](https://youtu.be/IQNesGiM93w)
