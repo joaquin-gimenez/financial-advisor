@@ -1,41 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import IdealPortfolioTable from './IdealPortfolioTable';
 import IdealPortfolioGraph from './IdealPortfolioGraph';
 import IdealPortfolioButton from './IdealPortfolioButton';
 
-class IdealPortfolioOverview extends React.Component {
+const IdealPortfolioOverview = () => {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      displayAsGraph: false
-    }
-    this.handleTableModeChange = this.handleTableModeChange.bind(this);
+  const [displayAsGraph, setDisplayAsGraph] = useState(false);
+
+  const handleTableModeChange = () => {
+    setDisplayAsGraph(!displayAsGraph);
   }
 
-  handleTableModeChange() {
-    this.setState({ 
-      displayAsGraph: !this.state.displayAsGraph 
-    })
-  }
-
-  render() {
-    return (
-      <div className="ideal-overview grid-x">
-        <div className="cell small-12 medium-10 text-center">
-          {this.state.displayAsGraph
-            ? <IdealPortfolioGraph />
-            : <IdealPortfolioTable />
-          }
-        </div>
-        <div className="cell small-12 medium-2 text-center">
-          <IdealPortfolioButton 
-            graphMode={this.state.displayAsGraph} 
-            onClick={this.handleTableModeChange}/>
-        </div>
+  return (
+    <div className="ideal-overview grid-x">
+      <div className="cell small-12 medium-10 text-center">
+        {displayAsGraph
+          ? <IdealPortfolioGraph />
+          : <IdealPortfolioTable />
+        }
       </div>
-    );
-  }
+      <div className="cell small-12 medium-2 text-center">
+        <IdealPortfolioButton 
+          graphMode={displayAsGraph} 
+          onClick={handleTableModeChange}/>
+      </div>
+    </div>
+  );
 }
 
 export default IdealPortfolioOverview;

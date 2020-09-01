@@ -1,202 +1,184 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import CurrentPortfolioRow from './CurrentPortfolioRow';
 import CurrentPortfolioRecommendedTransfers from './CurrentPortfolioRecommendedTransfers';
 import { toTwoDecimal } from '../Helpers/Helpers';
 
-class CurrentPortfolio extends React.Component {
+const CurrentPortfolio = () => {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      enableRebalance: false, 
-      totalCurrentValues: 0,
-      incorrectAmountFormat: false,
-      currentPortfolio: {
-        bonds: {
-          amount: "",
-          recommended: "",
-          difference: ""
-        },
-        largeCap: {
-          amount: "",
-          recommended: "",
-          difference: ""
-        },
-        midCap: {
-          amount: "",
-          recommended: "",
-          difference: ""
-        },
-        foreign: {
-          amount: "",
-          recommended: "",
-          difference: ""
-        },
-        smallCap: {
-          amount: "",
-          recommended: "",
-          difference: ""
-        }
-      }
+  const riskLevel = useSelector( state => {
+    return state.riskLevels.riskLevels[
+      state.riskLevels.activeRiskLevel - 1
+    ]
+  });
+
+  const [enableRebalance, setEnableRebalance] = useState(false); 
+  const [incorrectAmountFormat, setIncorrectAmountFormat] = useState(false); 
+  const [currentPortfolio, setCurrentPortfolio] = useState({
+    bonds: {
+      amount: "",
+      recommended: "",
+      difference: ""
+    },
+    largeCap: {
+      amount: "",
+      recommended: "",
+      difference: ""
+    },
+    midCap: {
+      amount: "",
+      recommended: "",
+      difference: ""
+    },
+    foreign: {
+      amount: "",
+      recommended: "",
+      difference: ""
+    },
+    smallCap: {
+      amount: "",
+      recommended: "",
+      difference: ""
     }
-
-    this.handleChange =  this.handleChange.bind(this);
-    this.handleRebalance =  this.handleRebalance.bind(this);
-    this.checkStatusButton = this.checkStatusButton.bind(this);
-  }
-
-  handleChange (category, value) {
-    let currentPortfolio = {...this.state.currentPortfolio};
-    currentPortfolio[category].amount = isNaN(value) || value === "" ? value : parseInt(value);
+  });
     
-    this.setState({
-      ...currentPortfolio
-    });
+  function handleChange(category, value) {
 
-    this.checkStatusButton();
+    let currentPortfolioCopy = {...currentPortfolio};
+    currentPortfolioCopy[category].amount = isNaN(value) || value === "" ? value : parseInt(value);
+    
+    setCurrentPortfolio({ ...currentPortfolioCopy });
+
+    checkStatusButton();
   }
 
-  checkStatusButton() {
-    let enableRebalance = Object.values(this.state.currentPortfolio).every((category) => {
+  function checkStatusButton() {
+    let enableRebalance = Object.values(currentPortfolio).every((category) => {
       return category.amount;
     });
-    this.setState({
-      enableRebalance 
-    });
+    setEnableRebalance({ enableRebalance });
   }
 
-  handleRebalance () {
-    let currentPortfolio = {...this.state.currentPortfolio};
-    if (!this.shouldRebalance(currentPortfolio)) {
+  function handleRebalance() {
+    let currentPortfolioCopy = {...currentPortfolio};
+    if (!shouldRebalance(currentPortfolioCopy)) {
       return;
     }
-    const totalCurrentValues = this.calculateTotalCurrentValues();
+    const totalCurrentValues = calculateTotalCurrentValues();
 
-    for (const [category, data] of Object.entries(currentPortfolio)) {
-      data.recommended = this.calculateNewAmount(category, totalCurrentValues);
-      data.difference = this.calculateDifference(data.amount, data.recommended);
+    for (const [category, data] of Object.entries(currentPortfolioCopy)) {
+      data.recommended = calculateNewAmount(category, totalCurrentValues);
+      data.difference = calculateDifference(data.amount, data.recommended);
     }
-
-    this.setState({
-      ...currentPortfolio,
-      incorrectAmountFormat: false
-    })
+    setIncorrectAmountFormat( false );
+    setEnableRebalance({ ...currentPortfolioCopy });
   }
 
-  shouldRebalance(currentPortfolio) {
+  function shouldRebalance(currentPortfolio) {
     let allNumbers = Object.values(currentPortfolio).every(category => {
       return !isNaN(category.amount);
     })
     if (!allNumbers) {
-      this.setState({
-        incorrectAmountFormat: true
-      });
+      setIncorrectAmountFormat( true );
     }
     return allNumbers;
   }
 
-  calculateTotalCurrentValues() {
-    let currentPortfolio = Object.values(this.state.currentPortfolio);
-    return Object.keys(currentPortfolio)
+  function calculateTotalCurrentValues() {
+    let currentPortfolioCopy = Object.values(currentPortfolio);
+    return Object.keys(currentPortfolioCopy)
       .map((category) => {
-        return currentPortfolio[category].amount;
+        return currentPortfolioCopy[category].amount;
       })
       .reduce((sum, value) => {
         return sum + value;
       }, 0);
   }
 
-  calculateNewAmount(type, totalCurrentValues) {
-    let idealPercentageValue = this.props.riskLevelData[type];
+  function calculateNewAmount(type, totalCurrentValues) {
+    let idealPercentageValue = riskLevel[type];
     let newAmount = (idealPercentageValue * totalCurrentValues) / 100
     return Math.round( newAmount * 100) / 100;
   }
 
-  calculateDifference(amount, recommendedAmount) {
+  function calculateDifference(amount, recommendedAmount) {
     return toTwoDecimal(recommendedAmount - amount);  
   }
 
-  render() {
-    return (
-      <div className="current-portfolio">
-        <div className="current-portfolio--header grid-x">
-          <h3 className="cell small-12 medium-10 text-center medium-text-left">
-            Please Enter Your Current Portfolio
-          </h3>
-          <div className="cell small-12 medium-2 text-center medium-text-left"> 
-            <button 
-              className="current-portfolio--button button primary" 
-              onClick={this.handleRebalance} 
-              disabled={!this.state.enableRebalance}>
-                Rebalance
-            </button>
-          </div>
-        </div>
-        <div className="grid-x">
-          <table className="current-portfolio--table cell small-12 unstriped">
-            <thead>
-              <tr>
-                <th className="text-center" colSpan="2" >Current Amount</th>
-                <th className="text-center">Difference</th>
-                <th className="text-center">New Amount</th>
-                <th className="text-center">Recommended Transfers</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <CurrentPortfolioRow 
-                  onChange={this.handleChange} 
-                  category="bonds" 
-                  difference={this.state.currentPortfolio.bonds.difference} 
-                  recommendedValue={this.state.currentPortfolio.bonds.recommended} 
-                  currentValue={this.state.currentPortfolio.bonds.amount}/>
-                <CurrentPortfolioRecommendedTransfers 
-                  incorrectAmountFormat={this.state.incorrectAmountFormat} 
-                  currentPortfolio={this.state.currentPortfolio}/>
-              </tr>
-              <tr>
-                <CurrentPortfolioRow 
-                  onChange={this.handleChange} 
-                  category="largeCap" 
-                  difference={this.state.currentPortfolio.largeCap.difference} 
-                  recommendedValue={this.state.currentPortfolio.largeCap.recommended} 
-                  currentValue={this.state.currentPortfolio.largeCap.amount} />
-              </tr>
-              <tr>
-                <CurrentPortfolioRow 
-                  onChange={this.handleChange} 
-                  category="midCap" 
-                  difference={this.state.currentPortfolio.midCap.difference} 
-                  recommendedValue={this.state.currentPortfolio.midCap.recommended} 
-                  currentValue={this.state.currentPortfolio.midCap.amount} />
-              </tr>
-              <tr>
-                <CurrentPortfolioRow 
-                  onChange={this.handleChange} 
-                  category="foreign" 
-                  difference={this.state.currentPortfolio.foreign.difference} 
-                  recommendedValue={this.state.currentPortfolio.foreign.recommended} 
-                  currentValue={this.state.currentPortfolio.foreign.amount} />
-              </tr>
-              <tr>
-                <CurrentPortfolioRow 
-                  onChange={this.handleChange} 
-                  category="smallCap" 
-                  difference={this.state.currentPortfolio.smallCap.difference} 
-                  recommendedValue={this.state.currentPortfolio.smallCap.recommended} 
-                  currentValue={this.state.currentPortfolio.smallCap.amount} />
-              </tr>
-            </tbody>
-          </table>
+  return (
+    <div className="current-portfolio">
+      <div className="current-portfolio--header grid-x">
+        <h3 className="cell small-12 medium-10 text-center medium-text-left">
+          Please Enter Your Current Portfolio
+        </h3>
+        <div className="cell small-12 medium-2 text-center medium-text-left"> 
+          <button 
+            className="current-portfolio--button button primary" 
+            onClick={handleRebalance} 
+            disabled={!enableRebalance}>
+              Rebalance
+          </button>
         </div>
       </div>
-    )
-  }
+      <div className="grid-x">
+        <table className="current-portfolio--table cell small-12 unstriped">
+          <thead>
+            <tr>
+              <th className="text-center" colSpan="2" >Current Amount</th>
+              <th className="text-center">Difference</th>
+              <th className="text-center">New Amount</th>
+              <th className="text-center">Recommended Transfers</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <CurrentPortfolioRow 
+                onChange={handleChange} 
+                category="bonds" 
+                difference={currentPortfolio.bonds.difference} 
+                recommendedValue={currentPortfolio.bonds.recommended} 
+                currentValue={currentPortfolio.bonds.amount}/>
+              <CurrentPortfolioRecommendedTransfers 
+                incorrectAmountFormat={incorrectAmountFormat} 
+                currentPortfolio={currentPortfolio}/>
+            </tr>
+            <tr>
+              <CurrentPortfolioRow 
+                onChange={handleChange} 
+                category="largeCap" 
+                difference={currentPortfolio.largeCap.difference} 
+                recommendedValue={currentPortfolio.largeCap.recommended} 
+                currentValue={currentPortfolio.largeCap.amount} />
+            </tr>
+            <tr>
+              <CurrentPortfolioRow 
+                onChange={handleChange} 
+                category="midCap" 
+                difference={currentPortfolio.midCap.difference} 
+                recommendedValue={currentPortfolio.midCap.recommended} 
+                currentValue={currentPortfolio.midCap.amount} />
+            </tr>
+            <tr>
+              <CurrentPortfolioRow 
+                onChange={handleChange} 
+                category="foreign" 
+                difference={currentPortfolio.foreign.difference} 
+                recommendedValue={currentPortfolio.foreign.recommended} 
+                currentValue={currentPortfolio.foreign.amount} />
+            </tr>
+            <tr>
+              <CurrentPortfolioRow 
+                onChange={handleChange} 
+                category="smallCap" 
+                difference={currentPortfolio.smallCap.difference} 
+                recommendedValue={currentPortfolio.smallCap.recommended} 
+                currentValue={currentPortfolio.smallCap.amount} />
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  )
 }
 
-const mapStateToProps = state => ({
-  riskLevelData: state.riskLevels.riskLevels[state.riskLevels.activeRiskLevel - 1]
-});
-
-export default connect(mapStateToProps)(CurrentPortfolio);
+export default CurrentPortfolio;

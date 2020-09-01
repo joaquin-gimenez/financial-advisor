@@ -1,7 +1,7 @@
 import React from 'react';
 import { convertToDisplayName, toTwoDecimal } from '../Helpers/Helpers';
 
-function RecommendedTransfers(props) {
+const RecommendedTransfers = (props) => {
 
   function generateRecommendedTransfers() {
     let overRecommendedAmount = new Map(),

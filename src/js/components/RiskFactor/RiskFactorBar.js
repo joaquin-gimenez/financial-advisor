@@ -1,7 +1,7 @@
 import React from 'react';
 import RiskFactorList from './RiskFactorList';
 
-function RiskFactorBar(props) {
+const RiskFactorBar = () => {
   return (
     <div className="cell small-12 medium-10">
       <div className="grid-x risk-factor--levels">

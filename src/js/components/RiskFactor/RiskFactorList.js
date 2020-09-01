@@ -1,26 +1,23 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import RiskFactorListItem from './RiskFactorListItem';
 
-const RiskFactorList = (riskLevels) => {
-  
-    return (
-      <ul className="risk-factor--list grid-x no-bullet align-middle">
-        {
-          riskLevels.riskLevelsData.map((level, index) => {
-            return <RiskFactorListItem 
-                      riskLevel={index + 1} 
-                      activeLevel={riskLevels.activeRiskLevel} 
-                      key={index + 1} />
-          })
-        }
-      </ul>
-    );
+const RiskFactorList = () => {
+  const riskLevels = useSelector(state => state.riskLevels.riskLevels);
+  const activeRiskLevel = useSelector(state => state.riskLevels.activeRiskLevel);
+
+  return (
+    <ul className="risk-factor--list grid-x no-bullet align-middle">
+      {
+        riskLevels.map((level, index) => {
+          return <RiskFactorListItem 
+                    riskLevel={index + 1} 
+                    activeLevel={activeRiskLevel} 
+                    key={index + 1} />
+        })
+      }
+    </ul>
+  );
 }
 
-const mapStateToProps = state => ({
-  riskLevelsData: state.riskLevels.riskLevels,
-  activeRiskLevel: state.riskLevels.activeRiskLevel
-})
-
-export default connect(mapStateToProps)(RiskFactorList);
+export default RiskFactorList;

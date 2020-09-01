@@ -1,14 +1,16 @@
 import React from 'react';
 import { convertToDisplayName } from '../Helpers/Helpers.js'
 
-function CurrentPortfolioRow(props) {
+const CurrentPortfolioRow = (props) => {
 
-  function handleChange(category, e) {
+  const handleChange = (category, e) => {
     props.onChange(category, e.target.value);
   }
 
-  function formatAmountDifference(difference) {
-    return typeof difference === 'number' && Math.sign(difference) >= 0 ? "+" + difference: difference;
+  const formatAmountDifference = (difference) => {
+    return typeof difference === 'number' && Math.sign(difference) >= 0 
+      ? "+" + difference
+      : difference;
   }
 
   return (

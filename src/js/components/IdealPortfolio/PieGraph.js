@@ -2,7 +2,7 @@ import React, { useRef, useEffect} from 'react';
 import * as d3 from "d3";
 import { convertToDisplayName } from '../Helpers/Helpers.js'
 
-function PieGraphHook(props) {
+const PieGraph = (props) => {
   const height = props.height;
   const width = props.width;
   const innerRadius = props.innerRadius;
@@ -36,8 +36,7 @@ function PieGraphHook(props) {
         .attr("class","circle-wrapper")
         .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
     
-    let centeredText = svg
-      .append("text")
+    let centeredText = svg.append("text")
         .attr("x", "0")
         .attr("y", "-1.2em")
         .style("text-anchor", "middle")
@@ -53,15 +52,13 @@ function PieGraphHook(props) {
         .attr("dy", "1.2em")
         .html("PORTFOLIO")
 
-    let g = svg
-      .selectAll("circle")
+    let g = svg.selectAll("circle")
       .data(data_ready)
       .enter()
       .append('g')
         .attr("class", "arc");
       
-    g
-      .append("path")
+    g.append("path")
         .attr("d", arcGenerator)
         .attr("fill", function(d, i){
           return colors[i]
@@ -106,4 +103,4 @@ function PieGraphHook(props) {
   )
 }
 
-export default PieGraphHook;
+export default PieGraph;

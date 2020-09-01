@@ -1,17 +1,30 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from "react-redux";
 import { categories } from '../../data';
 
-function RiskLevelOverview(props) {
+const RiskLevelOverview = () => {
 
-  function generateCategoryHeader() {
+  const activeRiskLevel = useSelector(state => state.riskLevels.activeRiskLevel);
+  const riskLevel = useSelector(
+    state => state.riskLevels.riskLevels[
+      activeRiskLevel - 1
+    ]
+  );
+
+
+  const generateCategoryHeader = () => {
     return categories.map(category => {
-      return <th key={category.key}>{category.label}</th>;
+      return <th key={category.key}>
+        {category.label}
+      </th>;
     })
   }
-  function generateCategoryList() {
+
+  const generateCategoryList = () => {
     return categories.map(category => {
-      return <td className="text-right" key={category.key}>{props.riskLevelData[category.key] + "%"}</td>
+      return <td className="text-right" key={category.key}>
+        {riskLevel[category.key] + "%"}
+      </td>
     })
   }
 
@@ -33,9 +46,4 @@ function RiskLevelOverview(props) {
   );
 }
 
-const mapStateToProps = state => ({
-  riskLevelData: state.riskLevels.riskLevels[state.riskLevels.activeRiskLevel - 1],
-  activeRiskLevel: state.riskLevels.activeRiskLevel
-});
-
-export default connect(mapStateToProps)(RiskLevelOverview);
+export default RiskLevelOverview;

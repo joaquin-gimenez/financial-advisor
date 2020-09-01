@@ -1,25 +1,24 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useDispatch } from "react-redux";
 import { setActiveRiskLevel } from '../../redux/riskLevel/riskLevel.actions';
 
-class RiskFactorListItem extends React.Component {
-  constructor(props) {
-    super(props);
+const RiskFactorListItem = (props) => {
+
+  const activeLevel = props.activeLevel;
+  const riskLevel = props.riskLevel;
+  const dispatch = useDispatch();
+
+  function updateActiveLevel(riskLevel) {
+    dispatch(setActiveRiskLevel(riskLevel));
   }
 
-  updateActiveLevel(riskLevel) {
-    this.props.setActiveRiskLevel(riskLevel);
-  }
-
-  render() {
-    return (
-      <li className={`cell auto button secondary text-center ${ this.props.activeLevel === this.props.riskLevel ? "active" : ""}`}
-        onClick={() => this.updateActiveLevel(this.props.riskLevel)}>
-        { this.props.riskLevel}
-      </li>
-    );
-  }
+  return (
+    <li className={`cell auto button secondary text-center ${ activeLevel === riskLevel ? "active" : ""}`}
+      onClick={() => updateActiveLevel(riskLevel)}>
+      { riskLevel}
+    </li>
+  );
 }
 
-export default connect(null, { setActiveRiskLevel })(RiskFactorListItem);
+export default RiskFactorListItem;
 

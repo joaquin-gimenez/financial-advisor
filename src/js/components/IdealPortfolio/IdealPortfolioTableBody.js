@@ -1,9 +1,9 @@
 import React from 'react';
 import { categories } from '../../data';
 
-function IdealPortfolioTableBody(props) {
+const IdealPortfolioTableBody = (props) => {
 
-  function generateLevelRows(level) {
+  const generateLevelRows = (level) => {
     return categories.map(category => {
       return <td key={category.key}>{level[category.key]}</td>;
     })

@@ -1,22 +1,22 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import IdealPortfolioTableHeader from './IdealPortfolioTableHeader';
 import IdealPortfolioTableBody from './IdealPortfolioTableBody';
 
-function IdealPortfolioTable(props) {
+const IdealPortfolioTable = () => {
+  const riskLevelsData = useSelector(state => state.riskLevels.riskLevels);
+  const activeRiskLevel = useSelector(state => state.riskLevels.activeRiskLevel); 
+
   return (
     <table className="ideal-portfolio-table">
       <IdealPortfolioTableHeader />
       <IdealPortfolioTableBody 
-        activeLevel={props.activeRiskLevel} 
-        riskLevels={props.riskLevelsData} />
+        activeLevel={activeRiskLevel} 
+        riskLevels={riskLevelsData} />
     </table>
   );
 }
 
-const mapStateToProps = state => ({
-  riskLevelsData: state.riskLevels.riskLevels,
-  activeRiskLevel: state.riskLevels.activeRiskLevel
-})
 
-export default connect(mapStateToProps)(IdealPortfolioTable);
+
+export default IdealPortfolioTable;

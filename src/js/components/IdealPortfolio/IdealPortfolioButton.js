@@ -1,6 +1,6 @@
 import React from 'react';
 
-function IdealPortfolioButton(props) {
+const IdealPortfolioButton = (props) => {
   return (
     <button 
       className="ideal-overview--button text-center" 

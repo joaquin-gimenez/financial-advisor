@@ -1,8 +1,14 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import PieGraphHook from './PieGraphHook';
+import { useSelector } from 'react-redux';
+import PieGraph from './PieGraph';
 
-function IdealPortfolioGraph(props) {
+function IdealPortfolioGraph() {
+  const activeRiskLevel = useSelector(state => 
+    state.riskLevels.riskLevels[ 
+      state.riskLevels.activeRiskLevel - 1
+    ]);
+  
+
   const height = 500;
   const width = 500;
   const margin = 50;
@@ -17,13 +23,13 @@ function IdealPortfolioGraph(props) {
   ];
   const defaultValues = [20, 20, 20, 20, 20];
   const defaultText = "Select Level";
-  let shouldDisplayDefault = !props.activeRiskLevel;
+  let shouldDisplayDefault = !activeRiskLevel;
 
   return (
-    <PieGraphHook
+    <PieGraph
       data={shouldDisplayDefault 
         ? defaultValues 
-        : props.activeRiskLevel
+        : activeRiskLevel
       }
       width={width}
       height={height}
@@ -36,8 +42,4 @@ function IdealPortfolioGraph(props) {
   )
 }
 
-const mapStateToProps = state => ({
-  activeRiskLevel: state.riskLevels.riskLevels[ state.riskLevels.activeRiskLevel - 1]
-})
-
-export default connect(mapStateToProps)(IdealPortfolioGraph);
+export default IdealPortfolioGraph;
